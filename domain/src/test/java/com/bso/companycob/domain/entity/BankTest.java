@@ -4,41 +4,46 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 import com.bso.companycob.domain.exception.DomainException;
+import com.bso.companycob.domain.utils.BigDecimalUtils;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class BankTest {
+class BankTest {
     
     @Test
-    public void testCreateBankWithSuccess() {
+    void testCreateBankWithSuccess() {
         UUID id = UUID.randomUUID();
         Bank bank = new Bank(id, "name", BigDecimal.TEN);
         Assertions.assertEquals(id, bank.getId());
         Assertions.assertEquals("name", bank.getName());
-        Assertions.assertTrue(BigDecimal.TEN.compareTo(bank.getInterestRate()) == 0);
+        Assertions.assertTrue(BigDecimalUtils.equals(BigDecimal.TEN, bank.getInterestRate()));
     }
 
     @Test
-    public void testCreateBankWithoutId() {
+    void testCreateBankWithoutId() {
         Bank bank = new Bank(null, "name", BigDecimal.TEN);
         Assertions.assertNotNull(bank.getId());
         Assertions.assertEquals("name", bank.getName());
-        Assertions.assertTrue(BigDecimal.TEN.compareTo(bank.getInterestRate()) == 0);
+        Assertions.assertTrue(BigDecimalUtils.equals(BigDecimal.TEN, bank.getInterestRate()));
     }
 
     @Test
-    public void testCreateBankWithNameNull() {
-        Assertions.assertThrows(DomainException.class, () -> new Bank(UUID.randomUUID(), null, BigDecimal.TEN));
+    void testCreateBankWithNameNull() {
+        var id = UUID.randomUUID();
+        Assertions.assertThrows(DomainException.class, () -> new Bank(id, null, BigDecimal.TEN));
     }
 
     @Test
-    public void testCreateBankWithNameEmpty() {
-        Assertions.assertThrows(DomainException.class, () -> new Bank(UUID.randomUUID(), "", BigDecimal.TEN));
+    void testCreateBankWithNameEmpty() {
+        var id = UUID.randomUUID();
+        Assertions.assertThrows(DomainException.class, () -> new Bank(id, "", BigDecimal.TEN));
     }
 
     @Test
-    public void testCreateBankWithInterestRateNegative() {
-        Assertions.assertThrows(DomainException.class, () -> new Bank(UUID.randomUUID(), "name", BigDecimal.valueOf(-10)));
+    void testCreateBankWithInterestRateNegative() {
+        var id = UUID.randomUUID();
+        final BigDecimal interestRate = BigDecimal.valueOf(-10);
+        Assertions.assertThrows(DomainException.class, () -> new Bank(id, "name", interestRate));
     }
 }

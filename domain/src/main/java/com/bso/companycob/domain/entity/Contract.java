@@ -10,13 +10,13 @@ import com.bso.companycob.domain.service.amount.AmountCalculatorDelegate;
 
 public class Contract implements Entity {
 
-    private UUID id;
-    private String number;
-    private LocalDate date;
-    private QuotaCollection quotas;
-    private Bank bank;
-    private CalcType calcType;
-    private final AmountCalculatorDelegate amountCalculatorDelegate = new AmountCalculatorDelegate();
+    private final UUID id;
+    private final String number;
+    private final LocalDate date;
+    private final QuotaCollection quotas;
+    private final Bank bank;
+    private final CalcType calcType;
+    private final transient AmountCalculatorDelegate amountCalculatorDelegate = new AmountCalculatorDelegate();
 
     public Contract(UUID id, String number, LocalDate date, Bank bank, QuotaCollection quotas, CalcType calcType) {
         this.id = id;

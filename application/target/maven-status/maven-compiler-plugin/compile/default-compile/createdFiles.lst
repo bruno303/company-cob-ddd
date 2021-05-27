@@ -1,7 +1,0 @@
-com/bso/application/service/ContractAmountUpdater.class
-com/bso/application/dto/PaymentDTO.class
-com/bso/application/dto/ContractDTO.class
-com/bso/application/repository/ContractRepository.class
-com/bso/application/service/ContractPaymentReceiver.class
-com/bso/application/CompanyCobApplication.class
-com/bso/application/repository/Repository.class

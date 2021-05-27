@@ -8,17 +8,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-public class DefaultAmountCalculatorTest {
+class DefaultAmountCalculatorTest {
     
     private final DefaultAmountCalculator calculator = new DefaultAmountCalculator();
 
     @Test
-    public void testCalculate() {
+    void testCalculate() {
         Quota quota = Mockito.mock(Quota.class);
         Mockito.when(quota.getUpdatedAmount()).thenReturn(BigDecimal.valueOf(30));
+        Mockito.when(quota.getDaysFromDate()).thenReturn(50L);
 
-        BigDecimal updatedAmount = calculator.calculateUpdatedAmount(quota, 50, BigDecimal.valueOf(2.5));
-        Assertions.assertTrue(BigDecimal.valueOf(67.5).compareTo(updatedAmount) == 0);
+        BigDecimal updatedAmount = calculator.calculateUpdatedAmount(quota, BigDecimal.valueOf(2.5));
+        Assertions.assertEquals(0, BigDecimal.valueOf(67.5).compareTo(updatedAmount));
     }
 
 }

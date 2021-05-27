@@ -1,6 +1,0 @@
-com/bso/companycob/domain/entity/ContractTest.class
-com/bso/companycob/domain/entity/QuotaCollectionTest.class
-com/bso/companycob/domain/service/amount/DefaultAmountCalculatorTest.class
-com/bso/companycob/domain/entity/BankTest.class
-com/bso/companycob/domain/entity/QuotaTest.class
-com/bso/companycob/domain/factory/QuotaFactory.class

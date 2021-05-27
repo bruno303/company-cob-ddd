@@ -13,8 +13,8 @@ public class DefaultAmountCalculator implements AmountCalculator {
     }
 
     @Override
-    public BigDecimal calculateUpdatedAmount(Quota quota, long daysFromDate, BigDecimal interestRate) {
-        BigDecimal rate = BigDecimal.valueOf(daysFromDate).multiply(interestRate);
+    public BigDecimal calculateUpdatedAmount(Quota quota, BigDecimal interestRate) {
+        BigDecimal rate = BigDecimal.valueOf(quota.getDaysFromDate()).multiply(interestRate);
         BigDecimal interestAmount = quota.getUpdatedAmount().multiply(rate).divide(BigDecimal.valueOf(100));
         return quota.getUpdatedAmount().add(interestAmount);
     }

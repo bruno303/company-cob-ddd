@@ -12,10 +12,10 @@ import com.bso.companycob.domain.service.amount.DefaultAmountCalculator;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-public class ContractTest {
+class ContractTest {
 
     @Test
-    public void testCallingReceivePayment() {
+    void testCallingReceivePayment() {
         BigDecimal interestRate = BigDecimal.valueOf(2.5);
         Bank bank = Mockito.mock(Bank.class);
         Mockito.when(bank.getInterestRate()).thenReturn(interestRate);
@@ -30,7 +30,7 @@ public class ContractTest {
     }
     
     @Test
-    public void testCallingUpdateDebtAmount() {
+    void testCallingUpdateDebtAmount() {
         final BigDecimal interestRate = BigDecimal.valueOf(2.5);
         Bank bank = Mockito.mock(Bank.class);
         Mockito.when(bank.getInterestRate()).thenReturn(interestRate);

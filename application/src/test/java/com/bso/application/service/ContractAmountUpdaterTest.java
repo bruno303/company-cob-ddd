@@ -13,9 +13,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-public class ContractAmountUpdaterTest {
+class ContractAmountUpdaterTest {
 
-    private ContractRepository contractRepository = Mockito.mock(ContractRepository.class);
+    private final ContractRepository contractRepository = Mockito.mock(ContractRepository.class);
     private ContractAmountUpdater contractAmountUpdater;
 
     @BeforeEach
@@ -24,7 +24,7 @@ public class ContractAmountUpdaterTest {
     }
 
     @Test
-    public void testCallUpdateDebtWhenContractIsPresent() {
+    void testCallUpdateDebtWhenContractIsPresent() {
         ContractDTO dto = new ContractDTO(UUID.randomUUID());
         Contract contract = createContract();
 
@@ -37,7 +37,7 @@ public class ContractAmountUpdaterTest {
     }
 
     @Test
-    public void testCallUpdateDebtWhenContractIsNotPresent() {
+    void testCallUpdateDebtWhenContractIsNotPresent() {
         ContractDTO dto = new ContractDTO(UUID.randomUUID());
         Contract contract = createContract();
 

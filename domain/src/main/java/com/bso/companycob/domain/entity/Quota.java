@@ -70,9 +70,7 @@ public class Quota implements Entity {
     }
 
     public void receive(BigDecimal value) {
-        if (BigDecimalUtils.firstIsGreaterThanSecond(value, this.amount)) {
-            throw new RuntimeException("Amount receiving is greater than the quota value");
-        }
+        DomainException.throwsWhen(BigDecimalUtils.firstIsGreaterThanSecond(value, this.amount), "Amount receiving is greater than the quota value");
 
         this.amount = this.amount.add(value.negate());
         if (BigDecimalUtils.equals(this.amount, BigDecimal.ZERO)) {
@@ -87,10 +85,7 @@ public class Quota implements Entity {
     }
 
     private void doUpdateDebtAmount(AmountCalculator amountCalculator, BigDecimal interestRate) {
-        long daysFromDate = getDaysFromDate();
-        BigDecimal updatedAmount = amountCalculator.calculateUpdatedAmount(this, daysFromDate, interestRate);
-
-        this.updatedAmount = updatedAmount;
+        this.updatedAmount = amountCalculator.calculateUpdatedAmount(this, interestRate);
         this.dateUpdated = LocalDate.now();
     }
 

@@ -1,7 +1,0 @@
-/home/bso/dev/fonts/company-cob-ddd/application/src/main/java/com/bso/application/CompanyCobApplication.java
-/home/bso/dev/fonts/company-cob-ddd/application/src/main/java/com/bso/application/repository/Repository.java
-/home/bso/dev/fonts/company-cob-ddd/application/src/main/java/com/bso/application/service/ContractPaymentReceiver.java
-/home/bso/dev/fonts/company-cob-ddd/application/src/main/java/com/bso/application/dto/PaymentDTO.java
-/home/bso/dev/fonts/company-cob-ddd/application/src/main/java/com/bso/application/dto/ContractDTO.java
-/home/bso/dev/fonts/company-cob-ddd/application/src/main/java/com/bso/application/service/ContractAmountUpdater.java
-/home/bso/dev/fonts/company-cob-ddd/application/src/main/java/com/bso/application/repository/ContractRepository.java

@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.bso.companycob.domain.entity.BankTest
--------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s - in com.bso.companycob.domain.entity.BankTest

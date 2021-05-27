@@ -7,7 +7,7 @@ import com.bso.companycob.domain.enums.CalcType;
 
 public interface AmountCalculator {
     
-    BigDecimal calculateUpdatedAmount(Quota quota, long daysFromDate, BigDecimal interestRate);
+    BigDecimal calculateUpdatedAmount(Quota quota, BigDecimal interestRate);
     CalcType getCalcType();
 
 }

@@ -1,5 +1,6 @@
 package com.bso.companycob.domain.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -8,7 +9,7 @@ import com.bso.companycob.domain.enums.QuotaStatus;
 import com.bso.companycob.domain.exception.DomainException;
 import com.bso.companycob.domain.service.amount.AmountCalculator;
 
-public class QuotaCollection {
+public class QuotaCollection implements Serializable {
     
     private final List<Quota> quotas;
 

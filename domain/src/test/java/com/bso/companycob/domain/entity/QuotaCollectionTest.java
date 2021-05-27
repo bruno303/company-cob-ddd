@@ -11,27 +11,28 @@ import com.bso.companycob.domain.factory.QuotaFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class QuotaCollectionTest {
+class QuotaCollectionTest {
 
     @Test
-    public void testCreateQuotaCollectionWithSuccess() {
+    void testCreateQuotaCollectionWithSuccess() {
         Quota quota = QuotaFactory.createQuota();
         QuotaCollection quotaCollection = new QuotaCollection(List.of(quota));
         Assertions.assertEquals(quota, quotaCollection.getQuotas().get(0));
     }
 
     @Test
-    public void testCreateQuotaCollectionWithNullQuotas() {
+    void testCreateQuotaCollectionWithNullQuotas() {
         Assertions.assertThrows(DomainException.class, () -> new QuotaCollection(null));
     }
 
     @Test
-    public void testCreateQuotaCollectionWithEmptyQuotas() {
-        Assertions.assertThrows(DomainException.class, () -> new QuotaCollection(Collections.emptyList()));
+    void testCreateQuotaCollectionWithEmptyQuotas() {
+        final List<Quota> quotas = Collections.emptyList();
+        Assertions.assertThrows(DomainException.class, () -> new QuotaCollection(quotas));
     }
     
     @Test
-    public void testGetNextOpenQuotaWhenIsFirst() {
+    void testGetNextOpenQuotaWhenIsFirst() {
         Quota quota = QuotaFactory.createQuota();
         Quota quota2 = QuotaFactory.createQuota(2, QuotaStatus.PAID);
         QuotaCollection quotaCollection = new QuotaCollection(List.of(quota, quota2));
@@ -42,7 +43,7 @@ public class QuotaCollectionTest {
     }
 
     @Test
-    public void testGetNextOpenQuotaWhenIsMiddle() {
+    void testGetNextOpenQuotaWhenIsMiddle() {
         Quota quota = QuotaFactory.createQuota(1, QuotaStatus.PAID);
         Quota quota2 = QuotaFactory.createQuota(2);
         Quota quota3 = QuotaFactory.createQuota(3, QuotaStatus.PAID);
@@ -54,7 +55,7 @@ public class QuotaCollectionTest {
     }
 
     @Test
-    public void testGetNextOpenQuotaWhenIsLast() {
+    void testGetNextOpenQuotaWhenIsLast() {
         Quota quota = QuotaFactory.createQuota(1, QuotaStatus.PAID);
         Quota quota2 = QuotaFactory.createQuota(2);
         QuotaCollection quotaCollection = new QuotaCollection(List.of(quota, quota2));
@@ -65,16 +66,16 @@ public class QuotaCollectionTest {
     }
 
     @Test
-    public void testGetNextOpenQuotaWhenHaveNone() {
+    void testGetNextOpenQuotaWhenHaveNone() {
         Quota quota = QuotaFactory.createQuota(1, QuotaStatus.PAID);
         Quota quota2 = QuotaFactory.createQuota(2, QuotaStatus.PAID);
         QuotaCollection quotaCollection = new QuotaCollection(List.of(quota, quota2));
 
-        Assertions.assertThrows(DomainException.class, () -> quotaCollection.getNextOpenQuota());
+        Assertions.assertThrows(DomainException.class, quotaCollection::getNextOpenQuota);
     }
 
     @Test
-    public void testReceivePaymentZero() {
+    void testReceivePaymentZero() {
         Quota quota = QuotaFactory.createQuota();
         QuotaCollection quotaCollection = new QuotaCollection(List.of(quota));
 
@@ -86,7 +87,7 @@ public class QuotaCollectionTest {
     }
 
     @Test
-    public void testReceivePaymentSmallerThanValue() {
+    void testReceivePaymentSmallerThanValue() {
         Quota quota = QuotaFactory.createQuota();
         QuotaCollection quotaCollection = new QuotaCollection(List.of(quota));
 
@@ -98,7 +99,7 @@ public class QuotaCollectionTest {
     }
 
     @Test
-    public void testReceivePaymentEqualsValue() {
+    void testReceivePaymentEqualsValue() {
         Quota quota = QuotaFactory.createQuota();
         Quota quota2 = QuotaFactory.createQuota(2);
         QuotaCollection quotaCollection = new QuotaCollection(List.of(quota, quota2));
@@ -113,7 +114,7 @@ public class QuotaCollectionTest {
     }
 
     @Test
-    public void testReceivePaymentGreaterThanValue() {
+    void testReceivePaymentGreaterThanValue() {
         Quota quota = QuotaFactory.createQuota();
         Quota quota2 = QuotaFactory.createQuota(2);
         Quota quota3 = QuotaFactory.createQuota(3);

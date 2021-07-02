@@ -6,8 +6,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.bso.application.dto.ContractDTO;
-import com.bso.application.repository.ContractRepository;
 import com.bso.companycob.domain.entity.Contract;
+import com.bso.companycob.domain.repositories.ContractRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

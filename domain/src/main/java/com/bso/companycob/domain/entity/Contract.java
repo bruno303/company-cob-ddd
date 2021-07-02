@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import com.bso.companycob.domain.enums.CalcType;
+import com.bso.companycob.domain.events.EventRaiser;
+import com.bso.companycob.domain.events.impl.paymentreceived.PaymentReceivedEvent;
 import com.bso.companycob.domain.exception.DomainException;
 import com.bso.companycob.domain.service.amount.AmountCalculatorDelegate;
 
@@ -17,14 +19,16 @@ public class Contract implements Entity {
     private final Bank bank;
     private final CalcType calcType;
     private final transient AmountCalculatorDelegate amountCalculatorDelegate = new AmountCalculatorDelegate();
+    private final EventRaiser eventRaiser;
 
-    public Contract(UUID id, String number, LocalDate date, Bank bank, QuotaCollection quotas, CalcType calcType) {
+    public Contract(UUID id, String number, LocalDate date, Bank bank, QuotaCollection quotas, CalcType calcType, EventRaiser eventRaiser) {
         this.id = id == null ? UUID.randomUUID() : id;
         this.number = number;
         this.date = date;
         this.bank = bank;
         this.quotas = quotas;
         this.calcType = calcType;
+        this.eventRaiser = eventRaiser;
         validate();
     }
 
@@ -65,6 +69,7 @@ public class Contract implements Entity {
     public void receivePayment(BigDecimal value) {
         updateDebtAmount();
         quotas.receivePayment(value);
+        eventRaiser.raise(new PaymentReceivedEvent("message"));
     }
 
     public void updateDebtAmount() {

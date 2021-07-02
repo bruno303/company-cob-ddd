@@ -3,8 +3,8 @@ package com.bso.application.service;
 import java.util.Optional;
 
 import com.bso.application.dto.PaymentDTO;
-import com.bso.application.repository.ContractRepository;
 import com.bso.companycob.domain.entity.Contract;
+import com.bso.companycob.domain.repositories.ContractRepository;
 
 import org.springframework.stereotype.Service;
 

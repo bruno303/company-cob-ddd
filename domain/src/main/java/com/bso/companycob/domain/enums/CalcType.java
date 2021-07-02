@@ -1,5 +1,7 @@
 package com.bso.companycob.domain.enums;
 
+import java.util.stream.Stream;
+
 public enum CalcType {
     
     DEFAULT(1);
@@ -12,5 +14,12 @@ public enum CalcType {
 
     public int getValue() {
         return value;
+    }
+
+    public static CalcType fromValue(int value) {
+        return Stream.of(CalcType.values())
+            .filter(c -> c.getValue() == value)
+            .findAny()
+            .orElse(DEFAULT);
     }
 }

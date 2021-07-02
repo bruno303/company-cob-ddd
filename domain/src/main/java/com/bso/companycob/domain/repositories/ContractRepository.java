@@ -1,4 +1,4 @@
-package com.bso.application.repository;
+package com.bso.companycob.domain.repositories;
 
 import com.bso.companycob.domain.entity.Contract;
 

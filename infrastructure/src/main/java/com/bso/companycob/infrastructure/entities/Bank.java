@@ -1,11 +1,14 @@
 package com.bso.companycob.infrastructure.entities;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +24,9 @@ public class Bank implements PersistenceEntity {
 
     @Column(name = "INTEREST_RATE", nullable = false, precision = 12, scale = 2)
     private BigDecimal interestRate;
+
+    @OneToMany(targetEntity = Contract.class, mappedBy = "bank", cascade = { CascadeType.ALL })
+    private List<Contract> contracts;
 
     @Override
     public UUID getId() {
@@ -45,6 +51,14 @@ public class Bank implements PersistenceEntity {
 
     public void setInterestRate(BigDecimal interestRate) {
         this.interestRate = interestRate;
+    }
+
+    public List<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(List<Contract> contracts) {
+        this.contracts = contracts;
     }
 
     public com.bso.companycob.domain.entity.Bank toDomainBank() {

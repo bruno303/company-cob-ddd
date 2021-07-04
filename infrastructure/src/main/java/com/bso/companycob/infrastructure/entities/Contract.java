@@ -2,13 +2,16 @@ package com.bso.companycob.infrastructure.entities;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.bso.companycob.domain.entity.QuotaCollection;
@@ -28,12 +31,15 @@ public class Contract implements PersistenceEntity {
     @Column(name = "DATE", nullable = false)
     private LocalDate date;
 
-    @JoinColumn(name = "BANK_ID", nullable = false)
-    @ManyToOne(optional = false, targetEntity = Bank.class)
+    @JoinColumn(name = "BANK_ID", nullable = false, referencedColumnName = "ID")
+    @ManyToOne(optional = false, targetEntity = Bank.class, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private Bank bank;
 
     @Column(name = "CALC_TYPE", nullable = false)
     private int calcType;
+
+    @OneToMany(targetEntity = Quota.class, mappedBy = "contract", cascade = { CascadeType.ALL })
+    private List<Quota> quotas;
 
     @Override
     public UUID getId() {
@@ -76,6 +82,14 @@ public class Contract implements PersistenceEntity {
         this.calcType = calcType;
     }
     
+    public List<Quota> getQuotas() {
+        return quotas;
+    }
+
+    public void setQuotas(List<Quota> quotas) {
+        this.quotas = quotas;
+    }
+
     public com.bso.companycob.domain.entity.Contract toDomainContract() {
         com.bso.companycob.domain.entity.Bank domainBank = bank.toDomainBank();
         var quotas = new QuotaCollection(Collections.emptyList());

@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -11,6 +12,7 @@ import java.util.UUID;
 import com.bso.companycob.domain.enums.CalcType;
 import com.bso.companycob.infrastructure.entities.Bank;
 import com.bso.companycob.infrastructure.entities.Contract;
+import com.bso.companycob.infrastructure.entities.Quota;
 import com.bso.companycob.tests.AbstractIntegrationTest;
 
 import org.junit.jupiter.api.Test;
@@ -23,9 +25,6 @@ public class PersistenceContractRepositoryTest extends AbstractIntegrationTest {
     @Autowired
     private PersistenceContractRepository contractRepository;
 
-    @Autowired
-    private PersistenceBankRepository bankRepository;
-
     @Test
     public void testSaveContract() {
         Contract contract = createContract(UUID.randomUUID(), "123456");
@@ -34,6 +33,19 @@ public class PersistenceContractRepositoryTest extends AbstractIntegrationTest {
         assertThat(contractSaved.getNumber()).isEqualTo(contract.getNumber());
         assertThat(contractSaved.getDate()).isEqualTo(contract.getDate());
         assertThat(contractSaved.getCalcType()).isEqualTo(contract.getCalcType());
+        assertThat(contractSaved.getQuotas().size()).isEqualTo(2);
+
+        contractSaved.getQuotas().forEach(quotaSaved -> {
+            var quota = contract.getQuotas().stream().filter(q -> q.getId().equals(quotaSaved.getId())).findAny().get();
+            assertThat(quotaSaved.getId()).isEqualTo(quota.getId());
+            assertThat(quotaSaved.getAmount()).isEqualByComparingTo(quota.getAmount());
+            assertThat(quotaSaved.getUpdatedAmount()).isEqualByComparingTo(quota.getUpdatedAmount());
+            assertThat(quotaSaved.getDate()).isEqualTo(quota.getDate());
+            assertThat(quotaSaved.getDateUpdated()).isEqualTo(quota.getDateUpdated());
+            assertThat(quotaSaved.getNumber()).isEqualTo(quota.getNumber());
+            assertThat(quotaSaved.getStatus()).isEqualTo(quota.getStatus());
+            assertThat(quotaSaved.getContract().getId()).isEqualTo(quota.getContract().getId());
+        });
 
         Bank bank = contractSaved.getBank();
         assertThat(bank.getId()).isEqualTo(contract.getBank().getId());
@@ -80,8 +92,29 @@ public class PersistenceContractRepositoryTest extends AbstractIntegrationTest {
         contract.setDate(LocalDate.now());
         contract.setCalcType(CalcType.DEFAULT.getValue());
         contract.setBank(createBank());
+        contract.setQuotas(createQuotas(contract, 2));
 
-        return contract;
+        return contractRepository.save(contract);
+    }
+
+    private List<Quota> createQuotas(Contract contract, int amount) {
+        List<Quota> quotas = new ArrayList<>(amount);
+
+        for (int i = 0; i < amount; i++) {
+            Quota quota = new Quota();
+            quota.setId(UUID.randomUUID());
+            quota.setAmount(BigDecimal.TEN);
+            quota.setDate(LocalDate.now());
+            quota.setDateUpdated(LocalDate.now());
+            quota.setNumber(1);
+            quota.setStatus(1);
+            quota.setUpdatedAmount(BigDecimal.TEN);
+            quota.setContract(contract);
+
+            quotas.add(quota);
+        }
+
+        return quotas;
     }
 
     private Bank createBank() {
@@ -90,7 +123,7 @@ public class PersistenceContractRepositoryTest extends AbstractIntegrationTest {
         bank.setName("Bank");
         bank.setInterestRate(BigDecimal.valueOf(0.2));
 
-        return bankRepository.save(bank);
+        return bank;
     }
 
 }

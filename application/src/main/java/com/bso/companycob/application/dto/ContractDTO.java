@@ -1,4 +1,4 @@
-package com.bso.application.dto;
+package com.bso.companycob.application.dto;
 
 import java.util.UUID;
 

@@ -6,7 +6,8 @@ import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.bso.application.dto.PaymentDTO;
+import com.bso.companycob.application.dto.PaymentDTO;
+import com.bso.companycob.application.service.ContractPaymentReceiver;
 import com.bso.companycob.domain.entity.Contract;
 import com.bso.companycob.domain.repositories.ContractRepository;
 

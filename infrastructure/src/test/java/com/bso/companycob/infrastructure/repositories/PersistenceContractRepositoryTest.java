@@ -13,6 +13,7 @@ import com.bso.companycob.domain.enums.CalcType;
 import com.bso.companycob.infrastructure.entities.Bank;
 import com.bso.companycob.infrastructure.entities.Contract;
 import com.bso.companycob.infrastructure.entities.Quota;
+import com.bso.companycob.infrastructure.utils.Fixture;
 import com.bso.companycob.tests.AbstractIntegrationTest;
 
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,9 @@ public class PersistenceContractRepositoryTest extends AbstractIntegrationTest {
     @Autowired
     private PersistenceContractRepository contractRepository;
 
+    @Autowired
+    private Fixture fixture;
+
     @Test
     public void testSaveContract() {
         Contract contract = createContract(UUID.randomUUID(), "123456");
@@ -36,7 +40,10 @@ public class PersistenceContractRepositoryTest extends AbstractIntegrationTest {
         assertThat(contractSaved.getQuotas().size()).isEqualTo(2);
 
         contractSaved.getQuotas().forEach(quotaSaved -> {
-            var quota = contract.getQuotas().stream().filter(q -> q.getId().equals(quotaSaved.getId())).findAny().get();
+            var quotaOpt = contract.getQuotas().stream().filter(q -> q.getId().equals(quotaSaved.getId())).findAny();
+            assertThat(quotaOpt).isPresent();
+
+            var quota = quotaOpt.get();
             assertThat(quotaSaved.getId()).isEqualTo(quota.getId());
             assertThat(quotaSaved.getAmount()).isEqualByComparingTo(quota.getAmount());
             assertThat(quotaSaved.getUpdatedAmount()).isEqualByComparingTo(quota.getUpdatedAmount());
@@ -58,8 +65,8 @@ public class PersistenceContractRepositoryTest extends AbstractIntegrationTest {
         Contract contract = createContract(UUID.randomUUID(), "123456");
         contractRepository.save(contract);
 
-        Optional<Contract> bankFoundOpt = contractRepository.findById(contract.getId());
-        assertThat(bankFoundOpt).isPresent();
+        Optional<Contract> contractFoundOpt = contractRepository.findById(contract.getId());
+        assertThat(contractFoundOpt).isPresent();
     }
 
     @Test
@@ -123,7 +130,7 @@ public class PersistenceContractRepositoryTest extends AbstractIntegrationTest {
         bank.setName("Bank");
         bank.setInterestRate(BigDecimal.valueOf(0.2));
 
-        return bank;
+        return fixture.save(bank);
     }
 
 }

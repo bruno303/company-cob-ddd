@@ -1,4 +1,4 @@
-package com.bso.application.events;
+package com.bso.companycob.application.events;
 
 import java.util.stream.Stream;
 

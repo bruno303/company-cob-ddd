@@ -32,7 +32,7 @@ public class Contract implements PersistenceEntity {
     private LocalDate date;
 
     @JoinColumn(name = "BANK_ID", nullable = false, referencedColumnName = "ID")
-    @ManyToOne(optional = false, targetEntity = Bank.class, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToOne(optional = false, targetEntity = Bank.class)
     private Bank bank;
 
     @Column(name = "CALC_TYPE", nullable = false)

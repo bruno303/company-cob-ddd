@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.bso.companycob.domain.enums.QuotaStatus;
+
 @Entity
 @Table(name = "QUOTA")
 public class Quota implements PersistenceEntity {
@@ -107,12 +109,19 @@ public class Quota implements PersistenceEntity {
     }
  
     public com.bso.companycob.domain.entity.Quota toDomainQuota() {
-        // TODO map to domain quota
-        return null;
+        return new com.bso.companycob.domain.entity.Quota(id, number, amount, updatedAmount, date, QuotaStatus.fromValue(status), dateUpdated);
     }
 
     public static Quota fromDomainQuota(com.bso.companycob.domain.entity.Quota quota) {
-        // TODO map from domain quota
-        return null;
+        var persistenceQuota = new Quota();
+        persistenceQuota.setId(quota.getId());
+        persistenceQuota.setNumber(quota.getNumber());
+        persistenceQuota.setAmount(quota.getAmount());
+        persistenceQuota.setUpdatedAmount(quota.getUpdatedAmount());
+        persistenceQuota.setDate(quota.getDate());
+        persistenceQuota.setStatus(quota.getStatus().getValue());
+        persistenceQuota.setDateUpdated(quota.getDateUpdated());
+
+        return persistenceQuota;
     }
 }

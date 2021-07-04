@@ -1,9 +1,8 @@
-package com.bso.application;
+package com.bso.companycob.application;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.bso.companycob.domain.entity.Bank;
@@ -13,23 +12,25 @@ import com.bso.companycob.domain.entity.QuotaCollection;
 import com.bso.companycob.domain.enums.CalcType;
 import com.bso.companycob.domain.enums.QuotaStatus;
 import com.bso.companycob.domain.events.EventRaiser;
-import com.bso.companycob.domain.repositories.ContractRepository;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
+@ComponentScan(basePackages = "com.bso.companycob")
+@EntityScan(basePackages = "com.bso.companycob.infrastructure.entities")
+@EnableAutoConfiguration
+@EnableJpaRepositories(basePackages = "com.bso.companycob.infrastructure.repositories")
 public class Application {
     
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-    }
-
-    @Bean
-    public ContractRepository contractRepository() {
-        return new DummyContractRepository();
     }
 
     @Bean
@@ -41,29 +42,5 @@ public class Application {
             Contract contract = new Contract(UUID.randomUUID(), "1", LocalDate.now(), bank, quotas, CalcType.DEFAULT, eventRaiser);
             contract.receivePayment(BigDecimal.TEN);
         };
-    }
-
-    public static class DummyContractRepository implements ContractRepository {
-
-        @Override
-        public Optional<Contract> findById(UUID id) {
-            return null;
-        }
-
-        @Override
-        public List<Contract> findAll() {
-            return null;
-        }
-
-        @Override
-        public Contract save(Contract entity) {
-            return null;
-        }
-
-        @Override
-        public void delete(Contract entity) {
-                        
-        }
-
     }
 }

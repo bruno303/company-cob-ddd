@@ -1,5 +1,7 @@
 package com.bso.companycob.domain.enums;
 
+import java.util.stream.Stream;
+
 public enum QuotaStatus {
     
     OPEN(0),
@@ -13,5 +15,12 @@ public enum QuotaStatus {
 
     public int getValue() {
         return this.value;
+    }
+
+    public static QuotaStatus fromValue(int value) {
+        return Stream.of(QuotaStatus.values())
+            .filter(q -> q.getValue() == value)
+            .findAny()
+            .orElseThrow(() -> new RuntimeException("Quota status with value " + value + " not found!"));
     }
 }

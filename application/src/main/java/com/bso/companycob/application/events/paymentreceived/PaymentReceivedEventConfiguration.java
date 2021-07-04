@@ -1,4 +1,4 @@
-package com.bso.application.events.paymentreceived;
+package com.bso.companycob.application.events.paymentreceived;
 
 import com.bso.companycob.domain.events.EventHandler;
 import com.bso.companycob.domain.events.impl.paymentreceived.PaymentReceivedEvent;

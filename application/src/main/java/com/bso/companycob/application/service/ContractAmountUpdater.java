@@ -1,8 +1,8 @@
-package com.bso.application.service;
+package com.bso.companycob.application.service;
 
 import java.util.Optional;
 
-import com.bso.application.dto.ContractDTO;
+import com.bso.companycob.application.dto.ContractDTO;
 import com.bso.companycob.domain.entity.Contract;
 import com.bso.companycob.domain.repositories.ContractRepository;
 

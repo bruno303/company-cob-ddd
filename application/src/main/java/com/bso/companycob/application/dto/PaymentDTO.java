@@ -1,4 +1,4 @@
-package com.bso.application.dto;
+package com.bso.companycob.application.dto;
 
 import java.math.BigDecimal;
 import java.util.UUID;

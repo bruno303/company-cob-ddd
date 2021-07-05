@@ -1,12 +1,12 @@
-package com.bso.application.service;
+package com.bso.companycob.application.service;
 
 import static org.mockito.Mockito.times;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.bso.companycob.application.dto.ContractDTO;
-import com.bso.companycob.application.service.ContractAmountUpdater;
+import com.bso.companycob.application.dto.PaymentDTO;
 import com.bso.companycob.domain.entity.Contract;
 import com.bso.companycob.domain.repositories.ContractRepository;
 
@@ -14,37 +14,37 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-class ContractAmountUpdaterTest {
+class ContractPaymentReceiverTest {
 
     private final ContractRepository contractRepository = Mockito.mock(ContractRepository.class);
-    private ContractAmountUpdater contractAmountUpdater;
+    private ContractPaymentReceiver contractPaymentReceiver;
 
     @BeforeEach
     public void init() {
-        contractAmountUpdater = new ContractAmountUpdater(contractRepository);
+        contractPaymentReceiver = new ContractPaymentReceiver(contractRepository);
     }
 
     @Test
     void testCallUpdateDebtWhenContractIsPresent() {
-        ContractDTO dto = new ContractDTO(UUID.randomUUID());
+        PaymentDTO dto = new PaymentDTO(UUID.randomUUID(), BigDecimal.TEN);
         Contract contract = createContract();
 
         Mockito.when(contractRepository.findById(dto.getContractId())).thenReturn(Optional.of(contract));
 
-        contractAmountUpdater.updateAmount(dto);
+        contractPaymentReceiver.receivePayment(dto);
 
         Mockito.verify(contractRepository, times(1)).findById(dto.getContractId());
-        Mockito.verify(contract, times(1)).updateDebtAmount();
+        Mockito.verify(contract, times(1)).receivePayment(dto.getAmount());
     }
 
     @Test
     void testCallUpdateDebtWhenContractIsNotPresent() {
-        ContractDTO dto = new ContractDTO(UUID.randomUUID());
+        PaymentDTO dto = new PaymentDTO(UUID.randomUUID(), BigDecimal.TEN);
         Contract contract = createContract();
 
         Mockito.when(contractRepository.findById(dto.getContractId())).thenReturn(Optional.empty());
 
-        contractAmountUpdater.updateAmount(dto);
+        contractPaymentReceiver.receivePayment(dto);
 
         Mockito.verify(contractRepository, times(1)).findById(dto.getContractId());
         Mockito.verify(contract, times(0)).updateDebtAmount();

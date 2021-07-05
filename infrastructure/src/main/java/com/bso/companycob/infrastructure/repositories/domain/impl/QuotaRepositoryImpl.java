@@ -51,5 +51,12 @@ public class QuotaRepositoryImpl implements QuotaRepository {
         var quotaPersistence = com.bso.companycob.infrastructure.entities.Quota.fromDomainQuota(entity);
         quotaRepository.delete(quotaPersistence);
     }
+
+    @Override
+    public Quota saveAndFlush(Quota entity) {
+        var quotaPersistence = com.bso.companycob.infrastructure.entities.Quota.fromDomainQuota(entity);
+        var quotaSaved = quotaRepository.saveAndFlush(quotaPersistence);
+        return quotaSaved.toDomainQuota();
+    }
     
 }

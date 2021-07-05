@@ -51,5 +51,12 @@ public class ContractRepositoryImpl implements ContractRepository {
         var persistenceContract = com.bso.companycob.infrastructure.entities.Contract.fromDomainContract(entity);
         contractRepository.delete(persistenceContract);
     }
+
+    @Override
+    public Contract saveAndFlush(Contract entity) {
+        var persistenceContract = com.bso.companycob.infrastructure.entities.Contract.fromDomainContract(entity);
+        var savedContract = contractRepository.saveAndFlush(persistenceContract);
+        return savedContract.toDomainContract();
+    }
     
 }

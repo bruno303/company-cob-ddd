@@ -48,4 +48,11 @@ public class BankRepositoryImpl implements BankRepository {
         var persistenceBank = com.bso.companycob.infrastructure.entities.Bank.fromDomainBank(entity);
         repository.delete(persistenceBank);        
     }
+
+    @Override
+    public Bank saveAndFlush(Bank entity) {
+        var persistenceBank = com.bso.companycob.infrastructure.entities.Bank.fromDomainBank(entity);
+        var bankSaved = repository.saveAndFlush(persistenceBank);
+        return bankSaved.toDomainBank();
+    }
 }

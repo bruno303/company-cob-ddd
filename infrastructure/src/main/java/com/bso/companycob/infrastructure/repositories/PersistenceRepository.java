@@ -10,5 +10,6 @@ public interface PersistenceRepository<T extends PersistenceEntity> {
     Optional<T> findById(UUID id);
     List<T> findAll();
     T save(T entity);
+    T saveAndFlush(T entity);
     void delete(T entity);
 }

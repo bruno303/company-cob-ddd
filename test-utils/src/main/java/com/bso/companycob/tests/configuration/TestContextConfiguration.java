@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages = "com.bso.companycob.infrastructure.entities")
 @EnableAutoConfiguration
 @EnableJpaRepositories(basePackages = "com.bso.companycob.infrastructure.repositories")
+@SuppressWarnings("SpringComponentScan")
 public class TestContextConfiguration {
     
 }

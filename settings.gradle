@@ -1,0 +1,20 @@
+pluginManagement {
+	repositories {
+		maven { url 'https://repo.spring.io/snapshot' }
+		mavenCentral()
+		gradlePluginPortal()
+	}
+	resolutionStrategy {
+		eachPlugin {
+			if (requested.id.id == 'org.hibernate.orm') {
+				useModule('org.hibernate:hibernate-gradle-plugin:5.4.32.Final')
+			}
+		}
+	}
+}
+rootProject.name = 'company-cob-ddd'
+include 'domain'
+include 'application'
+include 'test-utils'
+include 'infrastructure'
+

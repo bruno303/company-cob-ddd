@@ -6,7 +6,7 @@ Debt update system as training for Domain-Driven Design
 ## Environment
 
 * Java 11
-* Maven 3.6.3
+* Gradle 7.1.1
 
 ---
 
@@ -16,7 +16,7 @@ Debt update system as training for Domain-Driven Design
 In root directory, run:
 
 ```shell
-$ mvn clean install
+$ gradle build
 ```
 
 ---

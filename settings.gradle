@@ -17,4 +17,5 @@ include 'domain'
 include 'application'
 include 'test-utils'
 include 'infrastructure'
+include 'registration-api'
 

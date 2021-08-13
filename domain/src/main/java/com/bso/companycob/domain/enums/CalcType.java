@@ -6,7 +6,7 @@ public enum CalcType {
     
     DEFAULT(1);
 
-    private int value;
+    private final int value;
 
     CalcType(int value) {
         this.value = value;

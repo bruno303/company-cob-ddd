@@ -41,10 +41,12 @@ public class PersistenceBankRepositoryTest extends AbstractIntegrationTest {
     @Test
     public void testFindAllBanks() {
         Bank bank = createBank(UUID.randomUUID(), "Bank", BigDecimal.valueOf(0.1));
+        Bank bank2 = createBank(UUID.randomUUID(), "Bank 2", BigDecimal.valueOf(0.1));
         bankRepository.save(bank);
+        bankRepository.save(bank2);
 
         List<Bank> allBanks = bankRepository.findAll();
-        assertThat(allBanks.size()).isEqualTo(1);
+        assertThat(allBanks).hasSize(2);
     }
 
     @Test

@@ -1,5 +1,7 @@
 package com.bso.companycob.application.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 
 import java.math.BigDecimal;
@@ -8,6 +10,7 @@ import java.util.UUID;
 
 import com.bso.companycob.application.dto.PaymentDTO;
 import com.bso.companycob.domain.entity.Contract;
+import com.bso.companycob.domain.exception.ContractNotFoundException;
 import com.bso.companycob.domain.repositories.ContractRepository;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +30,7 @@ class ContractPaymentReceiverTest {
     @Test
     void testCallUpdateDebtWhenContractIsPresent() {
         PaymentDTO dto = new PaymentDTO(UUID.randomUUID(), BigDecimal.TEN);
-        Contract contract = createContract();
+        Contract contract = createContractMock();
 
         Mockito.when(contractRepository.findById(dto.getContractId())).thenReturn(Optional.of(contract));
 
@@ -40,17 +43,20 @@ class ContractPaymentReceiverTest {
     @Test
     void testCallUpdateDebtWhenContractIsNotPresent() {
         PaymentDTO dto = new PaymentDTO(UUID.randomUUID(), BigDecimal.TEN);
-        Contract contract = createContract();
+        Contract contract = createContractMock();
 
         Mockito.when(contractRepository.findById(dto.getContractId())).thenReturn(Optional.empty());
 
-        contractPaymentReceiver.receivePayment(dto);
+        var exception = assertThrows(ContractNotFoundException.class,
+                () -> contractPaymentReceiver.receivePayment(dto));
+
+        assertThat(exception.getContractId()).isEqualByComparingTo(dto.getContractId());
 
         Mockito.verify(contractRepository, times(1)).findById(dto.getContractId());
         Mockito.verify(contract, times(0)).updateDebtAmount();
     }
 
-    private Contract createContract() {
+    private Contract createContractMock() {
         return Mockito.mock(Contract.class);
     }
     

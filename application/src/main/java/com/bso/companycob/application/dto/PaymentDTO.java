@@ -1,24 +1,12 @@
 package com.bso.companycob.application.dto;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.UUID;
 
+@Data
 public class PaymentDTO {
-    
     private final UUID contractId;
-    private BigDecimal amount;
-
-    public PaymentDTO(UUID contractId, BigDecimal amount) {
-        this.contractId = contractId;
-        this.amount = amount;
-    }
-
-    public UUID getContractId() {
-        return contractId;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
+    private final BigDecimal amount;
 }

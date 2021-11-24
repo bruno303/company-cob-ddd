@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 import com.bso.companycob.domain.enums.QuotaStatus;
 import com.bso.companycob.domain.exception.DomainException;
@@ -54,5 +55,13 @@ public class QuotaCollection implements Serializable {
 
     public void updateDebtAmount(AmountCalculator amountCalculator, BigDecimal interestRate) {
         quotas.forEach(q -> q.updateDebtAmount(amountCalculator, interestRate));
+    }
+
+    public void forEach(Consumer<? super Quota> consumer) {
+        this.getQuotas().forEach(consumer);
+    }
+
+    public int size() {
+        return this.getQuotas().size();
     }
 }

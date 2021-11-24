@@ -4,22 +4,22 @@ import java.util.Optional;
 
 import com.bso.companycob.application.dto.ContractDTO;
 import com.bso.companycob.domain.entity.Contract;
+import com.bso.companycob.domain.exception.ContractNotFoundException;
 import com.bso.companycob.domain.repositories.ContractRepository;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ContractAmountUpdater {
 
     private final ContractRepository contractRepository;
-
-    public ContractAmountUpdater(ContractRepository contractRepository) {
-        this.contractRepository = contractRepository;
-    }
     
     public void updateAmount(ContractDTO contractDto) {
         Optional<Contract> contractOpt = contractRepository.findById(contractDto.getContractId());
-        contractOpt.ifPresent(Contract::updateDebtAmount);
+        ContractNotFoundException.throwsWhen(contractOpt.isEmpty(), contractDto.getContractId());
+        contractOpt.get().updateDebtAmount();
     }
 
 }

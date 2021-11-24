@@ -1,5 +1,8 @@
 package com.bso.companycob.infrastructure.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -13,6 +16,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "BANK")
+@Getter
+@Setter
 public class Bank implements PersistenceEntity {
 
     @Id
@@ -27,39 +32,6 @@ public class Bank implements PersistenceEntity {
 
     @OneToMany(targetEntity = Contract.class, mappedBy = "bank", cascade = { CascadeType.ALL })
     private List<Contract> contracts;
-
-    @Override
-    public UUID getId() {
-        return this.id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getInterestRate() {
-        return interestRate;
-    }
-
-    public void setInterestRate(BigDecimal interestRate) {
-        this.interestRate = interestRate;
-    }
-
-    public List<Contract> getContracts() {
-        return contracts;
-    }
-
-    public void setContracts(List<Contract> contracts) {
-        this.contracts = contracts;
-    }
 
     public com.bso.companycob.domain.entity.Bank toDomainBank() {
         return new com.bso.companycob.domain.entity.Bank(id, name, interestRate);

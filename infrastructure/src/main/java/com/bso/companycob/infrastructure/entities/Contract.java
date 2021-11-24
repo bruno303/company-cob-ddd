@@ -1,9 +1,11 @@
 package com.bso.companycob.infrastructure.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,9 +18,13 @@ import javax.persistence.Table;
 
 import com.bso.companycob.domain.entity.QuotaCollection;
 import com.bso.companycob.domain.enums.CalcType;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "CONTRACT")
+@Getter
+@Setter
 public class Contract implements PersistenceEntity {
 
     @Id
@@ -41,58 +47,10 @@ public class Contract implements PersistenceEntity {
     @OneToMany(targetEntity = Quota.class, mappedBy = "contract", cascade = { CascadeType.ALL })
     private List<Quota> quotas;
 
-    @Override
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Bank getBank() {
-        return bank;
-    }
-
-    public void setBank(Bank bank) {
-        this.bank = bank;
-    }
-
-    public int getCalcType() {
-        return calcType;
-    }
-
-    public void setCalcType(int calcType) {
-        this.calcType = calcType;
-    }
-    
-    public List<Quota> getQuotas() {
-        return quotas;
-    }
-
-    public void setQuotas(List<Quota> quotas) {
-        this.quotas = quotas;
-    }
-
     public com.bso.companycob.domain.entity.Contract toDomainContract() {
         com.bso.companycob.domain.entity.Bank domainBank = bank.toDomainBank();
-        var quotas = new QuotaCollection(Collections.emptyList());
+
+        var quotas = new QuotaCollection(getQuotas().stream().map(Quota::toDomainQuota).collect(Collectors.toList()));
         return new com.bso.companycob.domain.entity.Contract(id, number, date, domainBank, quotas, CalcType.fromValue(calcType), null);
     }
 
@@ -103,7 +61,21 @@ public class Contract implements PersistenceEntity {
         persistenceContract.setDate(contract.getDate());
         persistenceContract.setCalcType(contract.getCalcType().getValue());
         persistenceContract.setBank(Bank.fromDomainBank(contract.getBank()));
+
+        List<Quota> quotas = convertQuotas(contract, persistenceContract);
+
+        persistenceContract.setQuotas(quotas);
         
         return persistenceContract;
+    }
+
+    private static List<Quota> convertQuotas(com.bso.companycob.domain.entity.Contract contract, Contract persistenceContract) {
+        List<Quota> quotas = new ArrayList<>(contract.getQuotas().size());
+        contract.getQuotas().forEach(q -> {
+            Quota quota = Quota.fromDomainQuota(q);
+            quota.setContract(persistenceContract);
+            quotas.add(quota);
+        });
+        return quotas;
     }
 }

@@ -23,7 +23,7 @@ public class QuotaRepositoryImpl implements QuotaRepository {
     @Override
     public Optional<Quota> findById(UUID id) {
         var quotaOpt = quotaRepository.findById(id);
-        if (!quotaOpt.isPresent()) {
+        if (quotaOpt.isEmpty()) {
             return Optional.empty();
         }
 

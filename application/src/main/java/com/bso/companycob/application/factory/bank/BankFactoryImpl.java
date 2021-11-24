@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 import com.bso.companycob.domain.entity.Bank;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BankFactoryImpl implements BankFactory {
 
     @Override

@@ -11,7 +11,7 @@ import com.bso.companycob.domain.enums.CalcType;
 
 public interface ContractFactory {
     
-    Contract create(UUID id, String number, LocalDate date, Bank bank, List<Quota> quotas, CalcType calcType);
-    Contract create(String number, LocalDate date, Bank bank, List<Quota> quotas, CalcType calcType);
+    Contract create(UUID id, String number, LocalDate date, UUID bankId, List<Quota> quotas, CalcType calcType);
+    Contract create(String number, LocalDate date, UUID bankId, List<Quota> quotas, CalcType calcType);
 
 }

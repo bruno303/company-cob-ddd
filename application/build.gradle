@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
     id 'java'
+    id 'jacoco'
 }
 
 group 'com.example'
@@ -28,7 +29,6 @@ test {
     useJUnitPlatform()
 }
 
-bootBuildImage {
-    builder = 'paketobuildpacks/builder:tiny'
-    environment = ['BP_NATIVE_IMAGE': 'true']
+bootJar {
+    enabled false
 }

@@ -23,11 +23,8 @@ public class BankRepositoryImpl implements BankRepository {
     @Override
     public Optional<Bank> findById(UUID id) {
         var bankOpt = repository.findById(id);
-        if (!bankOpt.isPresent()) {
-            return Optional.empty();
-        }
+        return bankOpt.map(com.bso.companycob.infrastructure.entities.Bank::toDomainBank);
 
-        return Optional.of(bankOpt.get().toDomainBank());
     }
 
     @Override

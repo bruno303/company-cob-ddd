@@ -24,11 +24,8 @@ public class ContractRepositoryImpl implements ContractRepository {
     public Optional<Contract> findById(UUID id) {
         var contractOpt = contractRepository.findById(id);
 
-        if (!contractOpt.isPresent()) {
-            return Optional.empty();
-        }
+        return contractOpt.map(com.bso.companycob.infrastructure.entities.Contract::toDomainContract);
 
-        return Optional.of(contractOpt.get().toDomainContract());
     }
 
     @Override

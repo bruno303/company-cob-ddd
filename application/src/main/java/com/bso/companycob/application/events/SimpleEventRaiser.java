@@ -6,6 +6,7 @@ import com.bso.companycob.domain.events.Event;
 import com.bso.companycob.domain.events.EventHandler;
 import com.bso.companycob.domain.events.EventRaiser;
 
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -13,15 +14,12 @@ import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class SimpleEventRaiser implements EventRaiser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SimpleEventRaiser.class);
 
     private final ApplicationContext context;
-
-    public SimpleEventRaiser(ApplicationContext context) {
-        this.context = context;
-    }
 
     @Override
     public <T extends Event> void raise(T event) {

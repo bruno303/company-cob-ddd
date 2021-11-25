@@ -12,10 +12,10 @@ pluginManagement {
 		}
 	}
 }
-rootProject.name = 'company-cob-ddd'
+rootProject.name = 'registration-api'
 include 'domain'
 include 'application'
 include 'test-utils'
 include 'infrastructure'
-include 'registration-api'
+include 'web'
 

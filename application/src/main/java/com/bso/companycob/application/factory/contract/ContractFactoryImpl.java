@@ -22,7 +22,6 @@ import org.springframework.stereotype.Component;
 public class ContractFactoryImpl implements ContractFactory {
 
     private final BankRepository bankRepository;
-    private final EventRaiser eventRaiser;
 
     @Override
     public Contract create(UUID id, String number, LocalDate date, UUID bankId, List<Quota> quotas, CalcType calcType) {
@@ -31,7 +30,7 @@ public class ContractFactoryImpl implements ContractFactory {
         Optional<Bank> bankOpt = bankRepository.findById(bankId);
         BankNotFoundException.throwsWhen(bankOpt.isEmpty(), bankId);
 
-        return new Contract(id, number, date, bankOpt.get(), quotaCollection, calcType, eventRaiser);
+        return new Contract(id, number, date, bankOpt.get(), quotaCollection, calcType);
     }
     
     @Override
@@ -41,6 +40,6 @@ public class ContractFactoryImpl implements ContractFactory {
         Optional<Bank> bankOpt = bankRepository.findById(bankId);
         BankNotFoundException.throwsWhen(bankOpt.isEmpty(), bankId);
 
-        return new Contract(UUID.randomUUID(), number, date, bankOpt.get(), quotaCollection, calcType, eventRaiser);
+        return new Contract(UUID.randomUUID(), number, date, bankOpt.get(), quotaCollection, calcType);
     }
 }

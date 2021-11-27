@@ -18,17 +18,14 @@ public class Contract implements Entity {
     private final QuotaCollection quotas;
     private final Bank bank;
     private final CalcType calcType;
-    private final transient AmountCalculatorDelegate amountCalculatorDelegate = new AmountCalculatorDelegate();
-    private final EventRaiser eventRaiser;
 
-    public Contract(UUID id, String number, LocalDate date, Bank bank, QuotaCollection quotas, CalcType calcType, EventRaiser eventRaiser) {
+    public Contract(UUID id, String number, LocalDate date, Bank bank, QuotaCollection quotas, CalcType calcType) {
         this.id = id == null ? UUID.randomUUID() : id;
         this.number = number;
         this.date = date;
         this.bank = bank;
         this.quotas = quotas;
         this.calcType = calcType;
-        this.eventRaiser = eventRaiser;
         validate();
     }
 
@@ -66,13 +63,13 @@ public class Contract implements Entity {
         DomainException.throwsWhen(calcType == null, "Contract calcType can't be null");
     }
 
-    public void receivePayment(BigDecimal value) {
+    public void receivePayment(BigDecimal value, EventRaiser eventRaiser) {
         updateDebtAmount();
         quotas.receivePayment(value);
         eventRaiser.raise(new PaymentReceivedEvent("message"));
     }
 
     public void updateDebtAmount() {
-        quotas.updateDebtAmount(amountCalculatorDelegate.getAmountCalculator(calcType), bank.getInterestRate());
+        quotas.updateDebtAmount(AmountCalculatorDelegate.INSTANCE.getAmountCalculator(calcType), bank.getInterestRate());
     }
 }

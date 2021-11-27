@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import com.bso.companycob.application.dto.PaymentDTO;
 import com.bso.companycob.domain.entity.Contract;
+import com.bso.companycob.domain.events.EventRaiser;
 import com.bso.companycob.domain.exception.ContractNotFoundException;
 import com.bso.companycob.domain.repositories.ContractRepository;
 
@@ -20,11 +21,12 @@ import org.mockito.Mockito;
 class ContractPaymentReceiverTest {
 
     private final ContractRepository contractRepository = Mockito.mock(ContractRepository.class);
+    private final EventRaiser eventRaiser = Mockito.mock(EventRaiser.class);
     private ContractPaymentReceiver contractPaymentReceiver;
 
     @BeforeEach
     public void init() {
-        contractPaymentReceiver = new ContractPaymentReceiver(contractRepository);
+        contractPaymentReceiver = new ContractPaymentReceiver(contractRepository, eventRaiser);
     }
 
     @Test
@@ -37,7 +39,7 @@ class ContractPaymentReceiverTest {
         contractPaymentReceiver.receivePayment(dto);
 
         Mockito.verify(contractRepository, times(1)).findById(dto.getContractId());
-        Mockito.verify(contract, times(1)).receivePayment(dto.getAmount());
+        Mockito.verify(contract, times(1)).receivePayment(dto.getAmount(), eventRaiser);
     }
 
     @Test

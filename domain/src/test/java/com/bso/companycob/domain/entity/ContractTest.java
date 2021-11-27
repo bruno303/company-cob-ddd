@@ -32,7 +32,7 @@ class ContractTest {
         Mockito.when(CONTRACT_BANK.getInterestRate()).thenReturn(interestRate);
 
         Contract contract = createContract();
-        contract.receivePayment(BigDecimal.TEN);
+        contract.receivePayment(BigDecimal.TEN, EVENT_RAISER);
 
         Mockito.verify(CONTRACT_QUOTAS, times(1)).updateDebtAmount(Mockito.isA(DefaultAmountCalculator.class), Mockito.eq(interestRate));
         Mockito.verify(CONTRACT_QUOTAS, times(1)).receivePayment(BigDecimal.TEN);
@@ -54,7 +54,7 @@ class ContractTest {
     @Test
     void testCreateContractWithSuccess() {
         UUID id = UUID.randomUUID();
-        var contract = new Contract(id, CONTRACT_NUMBER, CONTRACT_DATE, CONTRACT_BANK, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE, EVENT_RAISER);
+        var contract = new Contract(id, CONTRACT_NUMBER, CONTRACT_DATE, CONTRACT_BANK, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE);
         Assertions.assertEquals(id, contract.getId());
         Assertions.assertEquals(CONTRACT_NUMBER, contract.getNumber());
         Assertions.assertEquals(CONTRACT_DATE, contract.getDate());
@@ -65,47 +65,47 @@ class ContractTest {
 
     @Test
     void testCreateContractWithIdNullWillCreateUUID() {
-        var contract = new Contract(null, CONTRACT_NUMBER, CONTRACT_DATE, CONTRACT_BANK, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE, EVENT_RAISER);
+        var contract = new Contract(null, CONTRACT_NUMBER, CONTRACT_DATE, CONTRACT_BANK, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE);
         Assertions.assertNotNull(contract.getId());
     }
 
     @Test
     void testCreateContractWithNumberNull() {
         UUID id = UUID.randomUUID();
-        Assertions.assertThrows(DomainException.class, () -> new Contract(id, null, CONTRACT_DATE, CONTRACT_BANK, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE, EVENT_RAISER));
+        Assertions.assertThrows(DomainException.class, () -> new Contract(id, null, CONTRACT_DATE, CONTRACT_BANK, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE));
     }
 
     @Test
     void testCreateContractWithNumberEmpty() {
         UUID id = UUID.randomUUID();
-        Assertions.assertThrows(DomainException.class, () -> new Contract(id, "", CONTRACT_DATE, CONTRACT_BANK, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE, EVENT_RAISER));
+        Assertions.assertThrows(DomainException.class, () -> new Contract(id, "", CONTRACT_DATE, CONTRACT_BANK, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE));
     }
 
     @Test
     void testCreateContractWithDateNull() {
         UUID id = UUID.randomUUID();
-        Assertions.assertThrows(DomainException.class, () -> new Contract(id, CONTRACT_NUMBER, null, CONTRACT_BANK, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE, EVENT_RAISER));
+        Assertions.assertThrows(DomainException.class, () -> new Contract(id, CONTRACT_NUMBER, null, CONTRACT_BANK, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE));
     }
 
     @Test
     void testCreateContractWithBankNull() {
         UUID id = UUID.randomUUID();
-        Assertions.assertThrows(DomainException.class, () -> new Contract(id, CONTRACT_NUMBER, CONTRACT_DATE, null, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE, EVENT_RAISER));
+        Assertions.assertThrows(DomainException.class, () -> new Contract(id, CONTRACT_NUMBER, CONTRACT_DATE, null, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE));
     }
 
     @Test
     void testCreateContractWithQuotasNull() {
         UUID id = UUID.randomUUID();
-        Assertions.assertThrows(DomainException.class, () -> new Contract(id, CONTRACT_NUMBER, CONTRACT_DATE, CONTRACT_BANK, null, CONTRACT_CALC_TYPE, EVENT_RAISER));
+        Assertions.assertThrows(DomainException.class, () -> new Contract(id, CONTRACT_NUMBER, CONTRACT_DATE, CONTRACT_BANK, null, CONTRACT_CALC_TYPE));
     }
 
     @Test
     void testCreateContractWithCalcTypeNull() {
         UUID id = UUID.randomUUID();
-        Assertions.assertThrows(DomainException.class, () -> new Contract(id, CONTRACT_NUMBER, CONTRACT_DATE, CONTRACT_BANK, CONTRACT_QUOTAS, null, EVENT_RAISER));
+        Assertions.assertThrows(DomainException.class, () -> new Contract(id, CONTRACT_NUMBER, CONTRACT_DATE, CONTRACT_BANK, CONTRACT_QUOTAS, null));
     }
 
     private Contract createContract() {
-        return new Contract(UUID.randomUUID(), CONTRACT_NUMBER, CONTRACT_DATE, CONTRACT_BANK, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE, EVENT_RAISER);
+        return new Contract(UUID.randomUUID(), CONTRACT_NUMBER, CONTRACT_DATE, CONTRACT_BANK, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE);
     }
 }

@@ -51,7 +51,7 @@ public class Contract implements PersistenceEntity {
         com.bso.companycob.domain.entity.Bank domainBank = bank.toDomainBank();
 
         var quotas = new QuotaCollection(getQuotas().stream().map(Quota::toDomainQuota).collect(Collectors.toList()));
-        return new com.bso.companycob.domain.entity.Contract(id, number, date, domainBank, quotas, CalcType.fromValue(calcType), null);
+        return new com.bso.companycob.domain.entity.Contract(id, number, date, domainBank, quotas, CalcType.fromValue(calcType));
     }
 
     public static Contract fromDomainContract(com.bso.companycob.domain.entity.Contract contract) {

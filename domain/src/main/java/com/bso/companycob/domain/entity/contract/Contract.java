@@ -1,16 +1,20 @@
-package com.bso.companycob.domain.entity;
+package com.bso.companycob.domain.entity.contract;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.bso.companycob.domain.entity.AbstractAggregateRoot;
+import com.bso.companycob.domain.entity.AggregateRoot;
+import com.bso.companycob.domain.entity.bank.Bank;
+import com.bso.companycob.domain.entity.Entity;
 import com.bso.companycob.domain.enums.CalcType;
-import com.bso.companycob.domain.events.EventRaiser;
 import com.bso.companycob.domain.events.impl.paymentreceived.PaymentReceivedEvent;
 import com.bso.companycob.domain.exception.DomainException;
 import com.bso.companycob.domain.service.amount.AmountCalculatorDelegate;
 
-public class Contract implements Entity {
+public class Contract extends AbstractAggregateRoot
+        implements Entity, AggregateRoot {
 
     private final UUID id;
     private final String number;
@@ -63,10 +67,10 @@ public class Contract implements Entity {
         DomainException.throwsWhen(calcType == null, "Contract calcType can't be null");
     }
 
-    public void receivePayment(BigDecimal value, EventRaiser eventRaiser) {
+    public void receivePayment(BigDecimal value) {
         updateDebtAmount();
         quotas.receivePayment(value);
-        eventRaiser.raise(new PaymentReceivedEvent("message"));
+        addEvent(new PaymentReceivedEvent("message"));
     }
 
     public void updateDebtAmount() {

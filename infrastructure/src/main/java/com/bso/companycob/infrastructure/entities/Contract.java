@@ -2,7 +2,6 @@ package com.bso.companycob.infrastructure.entities;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -16,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.bso.companycob.domain.entity.QuotaCollection;
+import com.bso.companycob.domain.entity.contract.QuotaCollection;
 import com.bso.companycob.domain.enums.CalcType;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,14 +46,14 @@ public class Contract implements PersistenceEntity {
     @OneToMany(targetEntity = Quota.class, mappedBy = "contract", cascade = { CascadeType.ALL })
     private List<Quota> quotas;
 
-    public com.bso.companycob.domain.entity.Contract toDomainContract() {
-        com.bso.companycob.domain.entity.Bank domainBank = bank.toDomainBank();
+    public com.bso.companycob.domain.entity.contract.Contract toDomainContract() {
+        com.bso.companycob.domain.entity.bank.Bank domainBank = bank.toDomainBank();
 
         var quotas = new QuotaCollection(getQuotas().stream().map(Quota::toDomainQuota).collect(Collectors.toList()));
-        return new com.bso.companycob.domain.entity.Contract(id, number, date, domainBank, quotas, CalcType.fromValue(calcType));
+        return new com.bso.companycob.domain.entity.contract.Contract(id, number, date, domainBank, quotas, CalcType.fromValue(calcType));
     }
 
-    public static Contract fromDomainContract(com.bso.companycob.domain.entity.Contract contract) {
+    public static Contract fromDomainContract(com.bso.companycob.domain.entity.contract.Contract contract) {
         var persistenceContract = new Contract();
         persistenceContract.setId(contract.getId());
         persistenceContract.setNumber(contract.getNumber());
@@ -69,7 +68,7 @@ public class Contract implements PersistenceEntity {
         return persistenceContract;
     }
 
-    private static List<Quota> convertQuotas(com.bso.companycob.domain.entity.Contract contract, Contract persistenceContract) {
+    private static List<Quota> convertQuotas(com.bso.companycob.domain.entity.contract.Contract contract, Contract persistenceContract) {
         List<Quota> quotas = new ArrayList<>(contract.getQuotas().size());
         contract.getQuotas().forEach(q -> {
             Quota quota = Quota.fromDomainQuota(q);

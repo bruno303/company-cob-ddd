@@ -3,7 +3,7 @@ package com.bso.companycob.application.factory.bank;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import com.bso.companycob.domain.entity.Bank;
+import com.bso.companycob.domain.entity.bank.Bank;
 import org.springframework.stereotype.Component;
 
 @Component

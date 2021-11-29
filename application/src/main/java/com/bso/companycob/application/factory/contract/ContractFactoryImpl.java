@@ -5,12 +5,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.bso.companycob.domain.entity.Bank;
-import com.bso.companycob.domain.entity.Contract;
-import com.bso.companycob.domain.entity.Quota;
-import com.bso.companycob.domain.entity.QuotaCollection;
+import com.bso.companycob.domain.entity.bank.Bank;
+import com.bso.companycob.domain.entity.contract.Contract;
+import com.bso.companycob.domain.entity.contract.Quota;
+import com.bso.companycob.domain.entity.contract.QuotaCollection;
 import com.bso.companycob.domain.enums.CalcType;
-import com.bso.companycob.domain.events.EventRaiser;
 
 import com.bso.companycob.domain.exception.BankNotFoundException;
 import com.bso.companycob.domain.repositories.BankRepository;

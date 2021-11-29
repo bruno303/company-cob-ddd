@@ -18,4 +18,5 @@ include 'application'
 include 'test-utils'
 include 'infrastructure'
 include 'registration-api'
+include 'application-model'
 

@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.bso.companycob.domain.entity.Quota;
+import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.repositories.QuotaRepository;
 import com.bso.companycob.infrastructure.repositories.PersistenceQuotaRepository;
 

@@ -2,7 +2,7 @@ package com.bso.companycob.application.service;
 
 import com.bso.companycob.application.dto.bank.BankCreationDTO;
 import com.bso.companycob.application.factory.bank.BankFactory;
-import com.bso.companycob.domain.entity.Bank;
+import com.bso.companycob.domain.entity.bank.Bank;
 import com.bso.companycob.domain.repositories.BankRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class BankCrudServiceTest {

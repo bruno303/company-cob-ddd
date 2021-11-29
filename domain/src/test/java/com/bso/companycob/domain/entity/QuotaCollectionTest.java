@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
+import com.bso.companycob.domain.entity.contract.Quota;
+import com.bso.companycob.domain.entity.contract.QuotaCollection;
 import com.bso.companycob.domain.enums.QuotaStatus;
 import com.bso.companycob.domain.exception.DomainException;
 import com.bso.companycob.domain.factory.QuotaFactory;

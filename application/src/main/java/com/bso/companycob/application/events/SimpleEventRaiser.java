@@ -1,5 +1,6 @@
 package com.bso.companycob.application.events;
 
+import java.util.Collection;
 import java.util.stream.Stream;
 
 import com.bso.companycob.domain.events.Event;
@@ -36,6 +37,11 @@ public class SimpleEventRaiser implements EventRaiser {
         Stream.of(beanNames)
             .map(this::mapToEventHandler)
             .forEach(handler -> handler.handle(event));
+    }
+
+    @Override
+    public <T extends Event> void raise(Collection<? extends T> events) {
+        events.forEach(this::raise);
     }
 
     @SuppressWarnings(value = "unchecked")

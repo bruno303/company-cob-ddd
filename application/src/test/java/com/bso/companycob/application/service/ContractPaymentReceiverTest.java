@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.bso.companycob.application.dto.PaymentDTO;
-import com.bso.companycob.domain.entity.Contract;
+import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.events.EventRaiser;
 import com.bso.companycob.domain.exception.ContractNotFoundException;
 import com.bso.companycob.domain.repositories.ContractRepository;
@@ -39,7 +39,7 @@ class ContractPaymentReceiverTest {
         contractPaymentReceiver.receivePayment(dto);
 
         Mockito.verify(contractRepository, times(1)).findById(dto.getContractId());
-        Mockito.verify(contract, times(1)).receivePayment(dto.getAmount(), eventRaiser);
+        Mockito.verify(contract, times(1)).receivePayment(dto.getAmount());
     }
 
     @Test

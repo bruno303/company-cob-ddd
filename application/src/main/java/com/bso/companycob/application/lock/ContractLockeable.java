@@ -1,10 +1,11 @@
 package com.bso.companycob.application.lock;
 
-import com.bso.companycob.domain.entity.Contract;
+import com.bso.companycob.application.model.lock.Lockeable;
+import com.bso.companycob.domain.entity.contract.Contract;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class ContractLockeable implements Lockeable{
+public class ContractLockeable implements Lockeable {
 
     private final Contract contract;
 

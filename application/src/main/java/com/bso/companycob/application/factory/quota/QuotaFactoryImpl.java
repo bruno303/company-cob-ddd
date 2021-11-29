@@ -1,7 +1,7 @@
 package com.bso.companycob.application.factory.quota;
 
 import com.bso.companycob.application.dto.quota.QuotaCreationDTO;
-import com.bso.companycob.domain.entity.Quota;
+import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.enums.QuotaStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

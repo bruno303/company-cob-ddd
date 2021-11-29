@@ -47,11 +47,11 @@ public class Quota implements PersistenceEntity {
     @JoinColumn(name = "CONTRACT_ID", nullable = false, referencedColumnName = "ID")
     private Contract contract;
  
-    public com.bso.companycob.domain.entity.Quota toDomainQuota() {
-        return new com.bso.companycob.domain.entity.Quota(id, number, amount, updatedAmount, date, QuotaStatus.fromValue(status), dateUpdated);
+    public com.bso.companycob.domain.entity.contract.Quota toDomainQuota() {
+        return new com.bso.companycob.domain.entity.contract.Quota(id, number, amount, updatedAmount, date, QuotaStatus.fromValue(status), dateUpdated);
     }
 
-    public static Quota fromDomainQuota(com.bso.companycob.domain.entity.Quota quota) {
+    public static Quota fromDomainQuota(com.bso.companycob.domain.entity.contract.Quota quota) {
         var persistenceQuota = new Quota();
         persistenceQuota.setId(quota.getId());
         persistenceQuota.setNumber(quota.getNumber());

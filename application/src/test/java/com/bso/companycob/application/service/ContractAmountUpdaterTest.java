@@ -3,7 +3,6 @@ package com.bso.companycob.application.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.times;
 
 import java.util.Optional;
@@ -11,9 +10,9 @@ import java.util.UUID;
 
 import com.bso.companycob.application.dto.ContractDTO;
 import com.bso.companycob.application.lock.ContractLockeable;
-import com.bso.companycob.application.lock.LockManager;
-import com.bso.companycob.application.lock.Lockeable;
-import com.bso.companycob.domain.entity.Contract;
+import com.bso.companycob.application.model.lock.LockManager;
+import com.bso.companycob.application.model.lock.Lockeable;
+import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.exception.ContractNotFoundException;
 import com.bso.companycob.domain.repositories.ContractRepository;
 

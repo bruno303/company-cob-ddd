@@ -1,7 +1,6 @@
 package com.bso.companycob.application.dto.contract;
 
 import com.bso.companycob.application.dto.quota.QuotaCreationDTO;
-import com.bso.companycob.domain.entity.Bank;
 import com.bso.companycob.domain.enums.CalcType;
 import lombok.Data;
 

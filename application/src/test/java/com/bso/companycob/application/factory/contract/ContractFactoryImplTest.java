@@ -1,7 +1,7 @@
 package com.bso.companycob.application.factory.contract;
 
-import com.bso.companycob.domain.entity.Bank;
-import com.bso.companycob.domain.entity.Quota;
+import com.bso.companycob.domain.entity.bank.Bank;
+import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.enums.CalcType;
 import com.bso.companycob.domain.enums.QuotaStatus;
 import com.bso.companycob.domain.exception.BankNotFoundException;

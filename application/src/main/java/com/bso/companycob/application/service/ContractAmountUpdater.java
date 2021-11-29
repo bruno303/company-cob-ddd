@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import com.bso.companycob.application.dto.ContractDTO;
 import com.bso.companycob.application.lock.ContractLockeable;
-import com.bso.companycob.application.lock.LockManager;
-import com.bso.companycob.domain.entity.Contract;
+import com.bso.companycob.application.model.lock.LockManager;
+import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.exception.ContractNotFoundException;
 import com.bso.companycob.domain.repositories.ContractRepository;
 

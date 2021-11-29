@@ -1,13 +1,16 @@
 package com.bso.companycob.domain.entity;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.bso.companycob.domain.entity.bank.Bank;
+import com.bso.companycob.domain.entity.contract.Contract;
+import com.bso.companycob.domain.entity.contract.QuotaCollection;
 import com.bso.companycob.domain.enums.CalcType;
-import com.bso.companycob.domain.events.EventRaiser;
 import com.bso.companycob.domain.exception.DomainException;
 import com.bso.companycob.domain.service.amount.DefaultAmountCalculator;
 
@@ -22,7 +25,6 @@ class ContractTest {
     private static final Bank CONTRACT_BANK = Mockito.mock(Bank.class);
     private static final QuotaCollection CONTRACT_QUOTAS = Mockito.mock(QuotaCollection.class);
     private static final CalcType CONTRACT_CALC_TYPE = CalcType.DEFAULT;
-    private static final EventRaiser EVENT_RAISER = Mockito.mock(EventRaiser.class);
 
     @Test
     void testCallingReceivePayment() {
@@ -32,8 +34,9 @@ class ContractTest {
         Mockito.when(CONTRACT_BANK.getInterestRate()).thenReturn(interestRate);
 
         Contract contract = createContract();
-        contract.receivePayment(BigDecimal.TEN, EVENT_RAISER);
+        contract.receivePayment(BigDecimal.TEN);
 
+        assertEquals(1, contract.getDomainEvents().size());
         Mockito.verify(CONTRACT_QUOTAS, times(1)).updateDebtAmount(Mockito.isA(DefaultAmountCalculator.class), Mockito.eq(interestRate));
         Mockito.verify(CONTRACT_QUOTAS, times(1)).receivePayment(BigDecimal.TEN);
     }
@@ -55,12 +58,12 @@ class ContractTest {
     void testCreateContractWithSuccess() {
         UUID id = UUID.randomUUID();
         var contract = new Contract(id, CONTRACT_NUMBER, CONTRACT_DATE, CONTRACT_BANK, CONTRACT_QUOTAS, CONTRACT_CALC_TYPE);
-        Assertions.assertEquals(id, contract.getId());
-        Assertions.assertEquals(CONTRACT_NUMBER, contract.getNumber());
-        Assertions.assertEquals(CONTRACT_DATE, contract.getDate());
-        Assertions.assertEquals(CONTRACT_BANK, contract.getBank());
-        Assertions.assertEquals(CONTRACT_QUOTAS, contract.getQuotas());
-        Assertions.assertEquals(CONTRACT_CALC_TYPE, contract.getCalcType());
+        assertEquals(id, contract.getId());
+        assertEquals(CONTRACT_NUMBER, contract.getNumber());
+        assertEquals(CONTRACT_DATE, contract.getDate());
+        assertEquals(CONTRACT_BANK, contract.getBank());
+        assertEquals(CONTRACT_QUOTAS, contract.getQuotas());
+        assertEquals(CONTRACT_CALC_TYPE, contract.getCalcType());
     }
 
     @Test

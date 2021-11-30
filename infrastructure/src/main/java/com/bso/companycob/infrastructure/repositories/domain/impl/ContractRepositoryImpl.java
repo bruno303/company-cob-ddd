@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.bso.companycob.domain.entity.Contract;
+import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.repositories.ContractRepository;
 import com.bso.companycob.infrastructure.repositories.PersistenceContractRepository;
 

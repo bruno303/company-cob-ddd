@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import com.bso.companycob.domain.entity.Bank;
+import com.bso.companycob.domain.entity.bank.Bank;
 import com.bso.companycob.domain.repositories.BankRepository;
 import com.bso.companycob.infrastructure.repositories.PersistenceBankRepository;
 

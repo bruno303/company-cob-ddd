@@ -3,6 +3,7 @@ package com.bso.companycob.domain.entity;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import com.bso.companycob.domain.entity.bank.Bank;
 import com.bso.companycob.domain.exception.DomainException;
 import com.bso.companycob.domain.utils.BigDecimalUtils;
 

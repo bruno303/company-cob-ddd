@@ -5,7 +5,7 @@ import com.bso.companycob.application.dto.quota.QuotaCreationDTO;
 import com.bso.companycob.application.events.contract.creation.ContractCreatedEvent;
 import com.bso.companycob.application.factory.contract.ContractFactory;
 import com.bso.companycob.application.factory.quota.QuotaFactory;
-import com.bso.companycob.domain.entity.Contract;
+import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.enums.CalcType;
 import com.bso.companycob.domain.events.EventRaiser;
 import com.bso.companycob.domain.repositories.ContractRepository;

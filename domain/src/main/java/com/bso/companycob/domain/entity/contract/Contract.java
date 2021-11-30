@@ -1,16 +1,20 @@
-package com.bso.companycob.domain.entity;
+package com.bso.companycob.domain.entity.contract;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import com.bso.companycob.domain.entity.AbstractAggregateRoot;
+import com.bso.companycob.domain.entity.AggregateRoot;
+import com.bso.companycob.domain.entity.bank.Bank;
+import com.bso.companycob.domain.entity.Entity;
 import com.bso.companycob.domain.enums.CalcType;
-import com.bso.companycob.domain.events.EventRaiser;
 import com.bso.companycob.domain.events.impl.paymentreceived.PaymentReceivedEvent;
 import com.bso.companycob.domain.exception.DomainException;
 import com.bso.companycob.domain.service.amount.AmountCalculatorDelegate;
 
-public class Contract implements Entity {
+public class Contract extends AbstractAggregateRoot
+        implements Entity, AggregateRoot {
 
     private final UUID id;
     private final String number;
@@ -18,17 +22,14 @@ public class Contract implements Entity {
     private final QuotaCollection quotas;
     private final Bank bank;
     private final CalcType calcType;
-    private final transient AmountCalculatorDelegate amountCalculatorDelegate = new AmountCalculatorDelegate();
-    private final EventRaiser eventRaiser;
 
-    public Contract(UUID id, String number, LocalDate date, Bank bank, QuotaCollection quotas, CalcType calcType, EventRaiser eventRaiser) {
+    public Contract(UUID id, String number, LocalDate date, Bank bank, QuotaCollection quotas, CalcType calcType) {
         this.id = id == null ? UUID.randomUUID() : id;
         this.number = number;
         this.date = date;
         this.bank = bank;
         this.quotas = quotas;
         this.calcType = calcType;
-        this.eventRaiser = eventRaiser;
         validate();
     }
 
@@ -69,10 +70,10 @@ public class Contract implements Entity {
     public void receivePayment(BigDecimal value) {
         updateDebtAmount();
         quotas.receivePayment(value);
-        eventRaiser.raise(new PaymentReceivedEvent("message"));
+        addEvent(new PaymentReceivedEvent("message"));
     }
 
     public void updateDebtAmount() {
-        quotas.updateDebtAmount(amountCalculatorDelegate.getAmountCalculator(calcType), bank.getInterestRate());
+        quotas.updateDebtAmount(AmountCalculatorDelegate.INSTANCE.getAmountCalculator(calcType), bank.getInterestRate());
     }
 }

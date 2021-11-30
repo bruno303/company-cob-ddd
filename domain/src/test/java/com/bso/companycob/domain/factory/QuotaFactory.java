@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import com.bso.companycob.domain.entity.Quota;
+import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.enums.QuotaStatus;
 
 public class QuotaFactory {

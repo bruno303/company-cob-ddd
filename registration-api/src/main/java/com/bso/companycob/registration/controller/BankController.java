@@ -2,7 +2,7 @@ package com.bso.companycob.registration.controller;
 
 import com.bso.companycob.application.dto.bank.BankCreationDTO;
 import com.bso.companycob.application.service.BankCrudService;
-import com.bso.companycob.domain.entity.Bank;
+import com.bso.companycob.domain.entity.bank.Bank;
 import com.bso.companycob.registration.dto.BankResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

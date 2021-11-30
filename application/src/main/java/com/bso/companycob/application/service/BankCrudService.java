@@ -2,7 +2,7 @@ package com.bso.companycob.application.service;
 
 import com.bso.companycob.application.dto.bank.BankCreationDTO;
 import com.bso.companycob.application.factory.bank.BankFactory;
-import com.bso.companycob.domain.entity.Bank;
+import com.bso.companycob.domain.entity.bank.Bank;
 import com.bso.companycob.domain.repositories.BankRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

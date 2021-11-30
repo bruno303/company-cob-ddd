@@ -10,7 +10,9 @@ public class AmountCalculatorDelegate {
     
     private final Map<CalcType, AmountCalculator> amountCalculators = new EnumMap<>(CalcType.class);
 
-    public AmountCalculatorDelegate() {
+    public static final AmountCalculatorDelegate INSTANCE = new AmountCalculatorDelegate();
+
+    private AmountCalculatorDelegate() {
         DefaultAmountCalculator defaultAmountCalculator = new DefaultAmountCalculator();
         amountCalculators.put(defaultAmountCalculator.getCalcType(), defaultAmountCalculator);
     }

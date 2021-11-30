@@ -33,11 +33,11 @@ public class Bank implements PersistenceEntity {
     @OneToMany(targetEntity = Contract.class, mappedBy = "bank", cascade = { CascadeType.ALL })
     private List<Contract> contracts;
 
-    public com.bso.companycob.domain.entity.Bank toDomainBank() {
-        return new com.bso.companycob.domain.entity.Bank(id, name, interestRate);
+    public com.bso.companycob.domain.entity.bank.Bank toDomainBank() {
+        return new com.bso.companycob.domain.entity.bank.Bank(id, name, interestRate);
     }
 
-    public static Bank fromDomainBank(com.bso.companycob.domain.entity.Bank bank) {
+    public static Bank fromDomainBank(com.bso.companycob.domain.entity.bank.Bank bank) {
         var persistenceBank = new Bank();
         persistenceBank.setId(bank.getId());
         persistenceBank.setName(bank.getName());

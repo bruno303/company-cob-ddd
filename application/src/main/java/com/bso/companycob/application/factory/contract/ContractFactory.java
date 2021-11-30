@@ -4,9 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import com.bso.companycob.domain.entity.Bank;
-import com.bso.companycob.domain.entity.Contract;
-import com.bso.companycob.domain.entity.Quota;
+import com.bso.companycob.domain.entity.contract.Contract;
+import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.enums.CalcType;
 
 public interface ContractFactory {

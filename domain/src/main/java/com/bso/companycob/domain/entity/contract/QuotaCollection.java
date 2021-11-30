@@ -1,4 +1,4 @@
-package com.bso.companycob.domain.entity;
+package com.bso.companycob.domain.entity.contract;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

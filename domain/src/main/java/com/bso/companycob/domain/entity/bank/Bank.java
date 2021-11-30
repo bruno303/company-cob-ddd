@@ -1,12 +1,15 @@
-package com.bso.companycob.domain.entity;
+package com.bso.companycob.domain.entity.bank;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import com.bso.companycob.domain.entity.AbstractAggregateRoot;
+import com.bso.companycob.domain.entity.AggregateRoot;
+import com.bso.companycob.domain.entity.Entity;
 import com.bso.companycob.domain.exception.DomainException;
 import com.bso.companycob.domain.utils.BigDecimalUtils;
 
-public class Bank implements Entity {
+public class Bank extends AbstractAggregateRoot implements Entity, AggregateRoot {
 
     private UUID id;
     private String name;

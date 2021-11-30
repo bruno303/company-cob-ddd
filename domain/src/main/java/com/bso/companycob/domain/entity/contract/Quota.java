@@ -1,10 +1,11 @@
-package com.bso.companycob.domain.entity;
+package com.bso.companycob.domain.entity.contract;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
+import com.bso.companycob.domain.entity.Entity;
 import com.bso.companycob.domain.enums.QuotaStatus;
 import com.bso.companycob.domain.exception.DomainException;
 import com.bso.companycob.domain.service.amount.AmountCalculator;

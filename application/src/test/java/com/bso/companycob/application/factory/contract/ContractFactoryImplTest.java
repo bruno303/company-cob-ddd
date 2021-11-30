@@ -1,10 +1,9 @@
 package com.bso.companycob.application.factory.contract;
 
-import com.bso.companycob.domain.entity.Bank;
-import com.bso.companycob.domain.entity.Quota;
+import com.bso.companycob.domain.entity.bank.Bank;
+import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.enums.CalcType;
 import com.bso.companycob.domain.enums.QuotaStatus;
-import com.bso.companycob.domain.events.EventRaiser;
 import com.bso.companycob.domain.exception.BankNotFoundException;
 import com.bso.companycob.domain.repositories.BankRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,11 +23,10 @@ public class ContractFactoryImplTest {
 
     private ContractFactoryImpl contractFactory;
     private final BankRepository bankRepositoryMock = Mockito.mock(BankRepository.class);
-    private final EventRaiser eventRaiserMock = Mockito.mock(EventRaiser.class);
 
     @BeforeEach
     public void setup() {
-        contractFactory = new ContractFactoryImpl(bankRepositoryMock, eventRaiserMock);
+        contractFactory = new ContractFactoryImpl(bankRepositoryMock);
     }
 
     @Test

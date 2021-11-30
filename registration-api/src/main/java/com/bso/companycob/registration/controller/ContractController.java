@@ -2,9 +2,9 @@ package com.bso.companycob.registration.controller;
 
 import com.bso.companycob.application.dto.contract.ContractCreationDTO;
 import com.bso.companycob.application.service.ContractCrudService;
-import com.bso.companycob.domain.entity.Bank;
-import com.bso.companycob.domain.entity.Contract;
-import com.bso.companycob.domain.entity.Quota;
+import com.bso.companycob.domain.entity.bank.Bank;
+import com.bso.companycob.domain.entity.contract.Contract;
+import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.registration.dto.BankResponse;
 import com.bso.companycob.registration.dto.ContractResponse;
 import lombok.RequiredArgsConstructor;

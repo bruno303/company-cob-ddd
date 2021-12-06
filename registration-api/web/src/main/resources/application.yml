@@ -1,0 +1,17 @@
+logging:
+  level:
+    root: info
+spring:
+  jpa:
+    open-in-view: false
+    defer-datasource-initialization: true
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+
+keycloak:
+  auth-server-url: ${AUTH_URL:http://localhost:8081/auth}
+  realm: ${AUTH_REALM:companycob}
+  resource: ${AUTH_RESOURCE:registration-api}
+  bearer-only: true

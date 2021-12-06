@@ -22,6 +22,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-test'
     implementation "org.junit.jupiter:junit-jupiter-api:${junitJupiterApiVersion}"
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    implementation "io.rest-assured:rest-assured:${restAssuredVersion}"
 }
 
 test {

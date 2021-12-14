@@ -2,12 +2,11 @@ plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
     id 'java'
+    id 'maven-publish'
 }
 
-group 'com.example'
-version '0.0.1-SNAPSHOT'
-
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -29,4 +28,16 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+springBoot {
+    buildInfo()
+}
+
+publishing {
+    publications {
+        bootJava(MavenPublication) {
+            artifact bootJar
+        }
+    }
 }

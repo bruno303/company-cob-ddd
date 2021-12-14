@@ -2,12 +2,22 @@ plugins {
 	id 'org.springframework.boot' version '2.5.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'org.hibernate.orm'
 }
 
-group 'com.example'
-version '0.0.1-SNAPSHOT'
+// used in set-version.sh
+// this variables define version and group for
+// parent and all its submodules
+def projectVersion = '1.0.0-SNAPSHOT'
+def projectGroup = 'com.bso.companycob.registration-api'
+
+group projectGroup
+version projectVersion
 sourceCompatibility = '11'
+
+subprojects {
+	group projectGroup
+	version projectVersion
+}
 
 configurations {
 	compileOnly {
@@ -16,17 +26,9 @@ configurations {
 }
 
 repositories {
+	mavenLocal()
 	maven { url 'https://repo.spring.io/snapshot' }
 	mavenCentral()
-}
-
-hibernate {
-	enhance {
-		enableLazyInitialization = true
-		enableDirtyTracking = true
-		enableAssociationManagement = true
-		enableExtendedEnhancement = false
-	}
 }
 
 bootJar {

@@ -30,7 +30,7 @@ public class Contract implements PersistenceEntity {
     @Column(name = "ID", nullable = false, updatable = false)
     private UUID id;
     
-    @Column(name = "NUMBER", length = 100, nullable = false)
+    @Column(name = "NUMBER", length = 100, nullable = false, unique = true)
     private String number;
 
     @Column(name = "DATE", nullable = false)

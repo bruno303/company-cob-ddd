@@ -1,5 +1,6 @@
 package com.bso.companycob.infrastructure.lock;
 
+import com.bso.companycob.application.model.lock.Callable;
 import com.bso.companycob.application.model.lock.LockManager;
 import com.bso.companycob.application.model.lock.Lockeable;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,16 @@ public class InMemoryLockManager implements LockManager {
         this.tryLock(object);
         try {
             runnable.run();
+        } finally {
+            this.unlock(object);
+        }
+    }
+
+    @Override
+    public <T> T lockAndProcess(Lockeable object, Callable<T> callable) {
+        this.tryLock(object);
+        try {
+            return callable.call();
         } finally {
             this.unlock(object);
         }

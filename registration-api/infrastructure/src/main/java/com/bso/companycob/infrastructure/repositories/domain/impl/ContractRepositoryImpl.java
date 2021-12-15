@@ -55,5 +55,10 @@ public class ContractRepositoryImpl implements ContractRepository {
         var savedContract = contractRepository.saveAndFlush(persistenceContract);
         return savedContract.toDomainContract();
     }
-    
+
+    @Override
+    public Optional<Contract> findByNumber(String number) {
+        var contractPersistenceOpt = contractRepository.findByNumber(number);
+        return contractPersistenceOpt.map(com.bso.companycob.infrastructure.entities.Contract::toDomainContract);
+    }
 }

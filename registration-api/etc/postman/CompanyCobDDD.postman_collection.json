@@ -214,7 +214,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"number\": \"{{$randomUUID}}\",\n    \"date\": \"{{$isoTimestamp}}\",\n    \"bankId\": \"b410a233-0b05-4e75-a661-95768a35cb4f\",\n    \"quotas\": [\n        {\n            \"number\": {{$randomInt}},\n            \"amount\": {{$randomPrice}},\n            \"date\": \"{{$isoTimestamp}}\",\n            \"status\": \"OPEN\"\n        }\n    ],\n    \"calcType\": \"DEFAULT\"\n}",
+					"raw": "{\n    \"number\": \"{{$randomUUID}}\",\n    \"date\": \"{{$isoTimestamp}}\",\n    \"bankId\": \"4c8cea55-1341-4898-9b40-1b70542b36ce\",\n    \"quotas\": [\n        {\n            \"number\": {{$randomInt}},\n            \"amount\": {{$randomPrice}},\n            \"date\": \"{{$isoTimestamp}}\",\n            \"status\": \"OPEN\"\n        }\n    ],\n    \"calcType\": \"DEFAULT\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -232,6 +232,69 @@
 						"api",
 						"v1",
 						"contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Bank",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableCookies": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token_keycloak}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{$randomCompanyName}}\",\n    \"interestRate\": {{$randomPrice}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/bank",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"bank"
 					]
 				}
 			},

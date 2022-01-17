@@ -18,7 +18,8 @@ dependencies {
     implementation "org.keycloak:keycloak-spring-boot-starter:${keycloakVersion}"
     implementation "org.keycloak.bom:keycloak-adapter-bom:${keycloakVersion}"
     implementation project(':domain')
-    implementation project(':application')
+    implementation project(':application:application-core')
+    implementation project(':application:application-model')
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'

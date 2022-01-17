@@ -1,6 +1,6 @@
 package com.bso.companycob.registration;
 
-import com.bso.companycob.application.annotations.CompanyCobSpringBootApplication;
+import com.bso.companycob.application.core.annotations.CompanyCobSpringBootApplication;
 import org.springframework.boot.SpringApplication;
 
 @CompanyCobSpringBootApplication

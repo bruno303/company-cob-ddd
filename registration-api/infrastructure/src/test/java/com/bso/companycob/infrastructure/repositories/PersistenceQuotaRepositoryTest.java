@@ -1,13 +1,5 @@
 package com.bso.companycob.infrastructure.repositories;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
 import com.bso.companycob.domain.enums.CalcType;
 import com.bso.companycob.domain.enums.QuotaStatus;
 import com.bso.companycob.infrastructure.entities.Bank;
@@ -15,11 +7,18 @@ import com.bso.companycob.infrastructure.entities.Contract;
 import com.bso.companycob.infrastructure.entities.Quota;
 import com.bso.companycob.infrastructure.utils.Fixture;
 import com.bso.companycob.tests.AbstractIntegrationTest;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 public class PersistenceQuotaRepositoryTest extends AbstractIntegrationTest {
@@ -72,7 +71,7 @@ public class PersistenceQuotaRepositoryTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void testDeleteContract() {
+    public void testDeleteQuota() {
         Quota quota = createQuota();
         quotaRepository.save(quota);
 
@@ -94,18 +93,21 @@ public class PersistenceQuotaRepositoryTest extends AbstractIntegrationTest {
         persistenceQuota.setDate(LocalDate.now().minusDays(1));
         persistenceQuota.setStatus(QuotaStatus.OPEN.getValue());
         persistenceQuota.setDateUpdated(LocalDate.now());
-        persistenceQuota.setContract(contract);
+        persistenceQuota.setContractId(contract.getId());
 
         return persistenceQuota;
     }
 
     private Contract createContract(UUID id, String number) {
+        Bank bank = createBank();
+
         var contract = new Contract();
         contract.setId(id);
         contract.setNumber(number);
         contract.setDate(LocalDate.now());
         contract.setCalcType(CalcType.DEFAULT.getValue());
-        contract.setBank(createBank());
+        contract.setBank(bank);
+        contract.setBankId(bank.getId());
 
         return fixture.save(contract);
     }

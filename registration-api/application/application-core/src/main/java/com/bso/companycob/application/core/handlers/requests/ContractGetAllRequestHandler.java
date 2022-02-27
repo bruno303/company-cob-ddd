@@ -2,10 +2,10 @@ package com.bso.companycob.application.core.handlers.requests;
 
 import com.bso.companycob.application.core.bus.request.ContractGetAllRequest;
 import com.bso.companycob.application.core.bus.response.ContractGetAllResponse;
-import com.bso.companycob.application.model.bus.RequestHandler;
 import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.repositories.ContractRepository;
+import com.bso.dracko.mediator.contract.RequestHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

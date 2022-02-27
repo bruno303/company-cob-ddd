@@ -1,9 +1,9 @@
 package com.bso.companycob.application.core.bus.request;
 
-import com.bso.companycob.application.model.bus.Request;
 import com.bso.companycob.application.core.bus.response.ContractCreationResponse;
 import com.bso.companycob.domain.enums.CalcType;
 import com.bso.companycob.domain.enums.QuotaStatus;
+import com.bso.dracko.mediator.contract.Request;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

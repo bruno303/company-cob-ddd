@@ -1,9 +1,9 @@
 package com.bso.companycob.registration.controller;
 
-import com.bso.companycob.application.model.bus.Mediator;
 import com.bso.companycob.application.core.bus.request.ContractCreationRequest;
 import com.bso.companycob.application.core.bus.response.ContractCreationResponse;
 import com.bso.companycob.registration.config.CompanyCobController;
+import com.bso.dracko.mediator.contract.Mediator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

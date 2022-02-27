@@ -16,3 +16,7 @@ fi
 ./set-version.sh $VERSION
 gradle clean build publishToMavenLocal -x check -x test
 
+
+git add --all
+git commit -m "version $VERSION"
+git push

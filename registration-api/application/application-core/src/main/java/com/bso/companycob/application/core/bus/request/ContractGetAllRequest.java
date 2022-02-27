@@ -1,7 +1,7 @@
 package com.bso.companycob.application.core.bus.request;
 
 import com.bso.companycob.application.core.bus.response.ContractGetAllResponse;
-import com.bso.companycob.application.model.bus.Request;
+import com.bso.dracko.mediator.contract.Request;
 
 import java.util.List;
 

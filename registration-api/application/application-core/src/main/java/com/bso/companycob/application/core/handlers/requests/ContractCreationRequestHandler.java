@@ -1,6 +1,5 @@
 package com.bso.companycob.application.core.handlers.requests;
 
-import com.bso.companycob.application.model.bus.RequestHandler;
 import com.bso.companycob.application.core.bus.request.ContractCreationRequest;
 import com.bso.companycob.application.core.bus.response.ContractCreationResponse;
 import com.bso.companycob.application.core.events.contract.creation.ContractCreatedEvent;
@@ -14,6 +13,7 @@ import com.bso.companycob.domain.entity.contract.QuotaCollection;
 import com.bso.companycob.domain.events.EventRaiser;
 import com.bso.companycob.domain.exception.ContractAlreadyExistsException;
 import com.bso.companycob.domain.repositories.ContractRepository;
+import com.bso.dracko.mediator.contract.RequestHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

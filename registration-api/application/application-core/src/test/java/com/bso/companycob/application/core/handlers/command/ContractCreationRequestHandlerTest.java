@@ -13,7 +13,7 @@ import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.enums.CalcType;
 import com.bso.companycob.domain.events.EventRaiser;
 import com.bso.companycob.domain.exception.ContractAlreadyExistsException;
-import com.bso.companycob.domain.repositories.ContractRepository;
+import com.bso.companycob.domain.repositories.ContractWriterRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -37,14 +37,14 @@ public class ContractCreationRequestHandlerTest {
     private final ContractFactory contractFactoryMock = Mockito.mock(ContractFactory.class);
     private final Contract contractMockResponse = Mockito.mock(Contract.class);
     private final ContractCreationResponse contractCreationMockResponse = Mockito.mock(ContractCreationResponse.class);
-    private final ContractRepository contractRepositoryMock = Mockito.mock(ContractRepository.class);
+    private final ContractWriterRepository contractWriterRepositoryMock = Mockito.mock(ContractWriterRepository.class);
     private final EventRaiser eventRaiserMock = Mockito.mock(EventRaiser.class);
     private final QuotaFactory quotaFactory = Mockito.mock(QuotaFactory.class);
     private final LockManager lockManagerMock = Mockito.mock(LockManager.class);
 
     @BeforeEach
     public void setup() {
-        handler = new ContractCreationRequestHandler(contractFactoryMock, contractRepositoryMock, eventRaiserMock, quotaFactory, lockManagerMock);
+        handler = new ContractCreationRequestHandler(contractFactoryMock, contractWriterRepositoryMock, eventRaiserMock, quotaFactory, lockManagerMock);
     }
 
     @Test
@@ -55,9 +55,9 @@ public class ContractCreationRequestHandlerTest {
         when(contractFactoryMock.create(Mockito.anyString(), any(LocalDate.class), any(UUID.class), Mockito.anyList(), Mockito.eq(CalcType.DEFAULT)))
             .thenReturn(contractMockResponse);
 
-        when(contractRepositoryMock.findByNumber(number)).thenReturn(Optional.empty());
+        when(contractWriterRepositoryMock.findByNumber(number)).thenReturn(Optional.empty());
 
-        when(contractRepositoryMock.saveAndFlush(any(Contract.class)))
+        when(contractWriterRepositoryMock.saveAndFlush(any(Contract.class)))
             .thenReturn(contractMockResponse);
 
         when(lockManagerMock.lockAndProcess(any(ContractLockeable.class), any(Callable.class)))
@@ -72,18 +72,19 @@ public class ContractCreationRequestHandlerTest {
         callableCaptor.getValue().call();
 
         verify(contractFactoryMock, times(1)).create(Mockito.anyString(), any(LocalDate.class), any(UUID.class), Mockito.anyList(), Mockito.eq(CalcType.DEFAULT));
-        verify(contractRepositoryMock, times(1)).saveAndFlush(any(Contract.class));
-        verify(contractRepositoryMock, times(1)).findByNumber(number);
+        verify(contractWriterRepositoryMock, times(1)).saveAndFlush(any(Contract.class));
+        verify(contractWriterRepositoryMock, times(1)).findByNumber(number);
         verify(eventRaiserMock, times(1)).raise(any(ContractCreatedEvent.class));
         verify(quotaFactory, times(0)).create(any(ContractCreationRequest.QuotaData.class));
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testCreatingContractWhenContractAlreadyExists() {
         final String number = "XPTO";
         ArgumentCaptor<Callable> callableCaptor = ArgumentCaptor.forClass(Callable.class);
 
-        when(contractRepositoryMock.findByNumber(number)).thenReturn(Optional.of(contractMockResponse));
+        when(contractWriterRepositoryMock.findByNumber(number)).thenReturn(Optional.of(contractMockResponse));
 
         when(lockManagerMock.lockAndProcess(any(ContractLockeable.class), any(Callable.class)))
                 .thenReturn(contractCreationMockResponse);
@@ -100,8 +101,8 @@ public class ContractCreationRequestHandlerTest {
         assertThat(ex).isExactlyInstanceOf(ContractAlreadyExistsException.class);
 
         verify(contractFactoryMock, times(0)).create(Mockito.anyString(), any(LocalDate.class), any(UUID.class), Mockito.anyList(), Mockito.any(CalcType.class));
-        verify(contractRepositoryMock, times(0)).saveAndFlush(any(Contract.class));
-        verify(contractRepositoryMock, times(1)).findByNumber(number);
+        verify(contractWriterRepositoryMock, times(0)).saveAndFlush(any(Contract.class));
+        verify(contractWriterRepositoryMock, times(1)).findByNumber(number);
         verify(eventRaiserMock, times(0)).raise(any(ContractCreatedEvent.class));
         verify(quotaFactory, times(0)).create(any(ContractCreationRequest.QuotaData.class));
     }

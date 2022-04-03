@@ -1,14 +1,6 @@
 plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
-    id 'java'
-    id 'jacoco'
-}
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -25,11 +17,8 @@ dependencies {
     testImplementation project(':test-utils')
     implementation project(':domain')
     implementation project(':application:application-model')
-    implementation "com.github.bruno303:spring-boot-dracko-mediator-starter:${springBootDrackoMediatorVersion}"
-}
-
-test {
-    useJUnitPlatform()
+    implementation "com.github.bruno303:spring-boot-dracko-mediator-starter"
+    implementation 'software.amazon.awssdk:sqs'
 }
 
 bootJar {

@@ -1,7 +1,9 @@
 package com.bso.companycob.infrastructure.repositories.domain.impl;
 
 import com.bso.companycob.domain.entity.contract.Contract;
+import com.bso.companycob.domain.repositories.ContractReaderRepository;
 import com.bso.companycob.domain.repositories.ContractRepository;
+import com.bso.companycob.domain.repositories.ContractWriterRepository;
 import com.bso.companycob.infrastructure.entities.Bank;
 import com.bso.companycob.infrastructure.entities.Quota;
 import com.bso.companycob.infrastructure.mapper.ContractMapper;
@@ -19,7 +21,9 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class ContractRepositoryImpl implements ContractRepository {
+public class ContractRepositoryImpl implements ContractRepository,
+        ContractWriterRepository,
+        ContractReaderRepository {
 
     private final PersistenceContractRepository contractRepository;
     private final PersistenceQuotaRepository persistenceQuotaRepository;

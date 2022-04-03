@@ -6,7 +6,7 @@ import com.bso.companycob.application.core.handlers.requests.ContractGetAllReque
 import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.entity.contract.QuotaCollection;
-import com.bso.companycob.domain.repositories.ContractRepository;
+import com.bso.companycob.domain.repositories.ContractReaderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -21,11 +21,11 @@ import static org.mockito.Mockito.when;
 class ContractGetAllRequestHandlerTest {
 
     private ContractGetAllRequestHandler handler;
-    private final ContractRepository contractRepositoryMock = Mockito.mock(ContractRepository.class);
+    private final ContractReaderRepository contractReaderRepositoryMock = Mockito.mock(ContractReaderRepository.class);
 
     @BeforeEach
     public void setup() {
-        handler = new ContractGetAllRequestHandler(contractRepositoryMock);
+        handler = new ContractGetAllRequestHandler(contractReaderRepositoryMock);
     }
 
     @Test
@@ -37,10 +37,10 @@ class ContractGetAllRequestHandlerTest {
         when(contract.getQuotas()).thenReturn(quotaCollection);
         when(quotaCollection.getQuotas()).thenReturn(List.of(quota));
 
-        when(contractRepositoryMock.findAll()).thenReturn(List.of(contract));
+        when(contractReaderRepositoryMock.findAll()).thenReturn(List.of(contract));
         List<ContractGetAllResponse> all = handler.handle(new ContractGetAllRequest());
         assertThat(all).hasSize(1);
 
-        verify(contractRepositoryMock, times(1)).findAll();
+        verify(contractReaderRepositoryMock, times(1)).findAll();
     }
 }

@@ -17,20 +17,49 @@ sourceCompatibility = '11'
 subprojects {
 	group projectGroup
 	version projectVersion
+
+	apply plugin: "java"
+	apply plugin: "jacoco"
+
+	dependencies {
+		implementation platform("software.amazon.awssdk:bom:${awsSdkVersion}")
+
+		compileOnly "org.projectlombok:lombok:${lombokVersion}"
+		annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+		implementation "io.springfox:springfox-boot-starter:${swaggerVersion}"
+		implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+		implementation "org.keycloak:keycloak-spring-boot-starter:${keycloakVersion}"
+		implementation "org.keycloak.bom:keycloak-adapter-bom:${keycloakVersion}"
+		implementation "com.github.bruno303:dracko-mediator:${drackoMediatorVersion}"
+		implementation "com.github.bruno303:spring-boot-dracko-mediator-starter:${drackoMediatorVersion}"
+		implementation "com.github.bruno303:spring-boot-dracko-mediator-starter:${springBootDrackoMediatorVersion}"
+
+		testImplementation "org.junit.jupiter:junit-jupiter-api:${junitJupiterApiVersion}"
+		testImplementation "org.mockito:mockito-core:${mockitoCoreVersion}"
+		testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
+		testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitJupiterApiVersion}"
+	}
+
+	test {
+		useJUnitPlatform()
+	}
+}
+
+allprojects {
+	repositories {
+		mavenLocal()
+		maven { url 'https://repo.spring.io/snapshot' }
+		mavenCentral()
+		maven { url 'https://jitpack.io' }
+	}
+}
+
+bootJar {
+	enabled = false
 }
 
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
-}
-
-repositories {
-	mavenLocal()
-	maven { url 'https://repo.spring.io/snapshot' }
-	mavenCentral()
-}
-
-bootJar {
-	enabled false
 }

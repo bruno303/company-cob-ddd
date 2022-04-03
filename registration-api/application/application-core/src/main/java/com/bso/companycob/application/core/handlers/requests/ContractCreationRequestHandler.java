@@ -12,7 +12,7 @@ import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.entity.contract.QuotaCollection;
 import com.bso.companycob.domain.events.EventRaiser;
 import com.bso.companycob.domain.exception.ContractAlreadyExistsException;
-import com.bso.companycob.domain.repositories.ContractRepository;
+import com.bso.companycob.domain.repositories.ContractWriterRepository;
 import com.bso.dracko.mediator.contract.RequestHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ import java.util.Optional;
 public class ContractCreationRequestHandler implements RequestHandler<ContractCreationRequest, ContractCreationResponse> {
 
     private final ContractFactory contractFactory;
-    private final ContractRepository contractRepository;
+    private final ContractWriterRepository contractRepository;
     private final EventRaiser eventRaiser;
     private final QuotaFactory quotaFactory;
     private final LockManager lockManager;

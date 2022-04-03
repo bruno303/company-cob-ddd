@@ -1,13 +1,5 @@
-plugins {
-    id 'java'
-}
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    compileOnly "org.projectlombok:lombok:1.18.20"
-    annotationProcessor "org.projectlombok:lombok:1.18.20"
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
     implementation project(':domain')
 }

@@ -4,7 +4,7 @@ import com.bso.companycob.application.core.bus.request.ContractGetAllRequest;
 import com.bso.companycob.application.core.bus.response.ContractGetAllResponse;
 import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.entity.contract.Quota;
-import com.bso.companycob.domain.repositories.ContractRepository;
+import com.bso.companycob.domain.repositories.ContractReaderRepository;
 import com.bso.dracko.mediator.contract.RequestHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ContractGetAllRequestHandler implements RequestHandler<ContractGetAllRequest, List<ContractGetAllResponse>> {
 
-    private final ContractRepository contractRepository;
+    private final ContractReaderRepository contractRepository;
 
     @Override
     public List<ContractGetAllResponse> handle(ContractGetAllRequest request) {

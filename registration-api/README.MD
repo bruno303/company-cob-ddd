@@ -37,6 +37,9 @@ This will create the database and localstack containers.
 
 To run keycloack, follow the instructions in `<ProjectRoot>/auth-server`.
 
+Next step is to copy the `web/src/main/resources/application.yml.sample` e paste in the same directory with the name
+`application.yml`. This file will be used as your local configurations.
+
 ##### - Run application
 
 To run locally, you need use a spring profile called `local`. You can do this with several ways:

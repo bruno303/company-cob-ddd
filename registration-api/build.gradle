@@ -33,6 +33,8 @@ subprojects {
 		implementation "com.github.bruno303:dracko-mediator:${drackoMediatorVersion}"
 		implementation "com.github.bruno303:spring-boot-dracko-mediator-starter:${drackoMediatorVersion}"
 		implementation "com.github.bruno303:spring-boot-dracko-mediator-starter:${springBootDrackoMediatorVersion}"
+		implementation "org.springframework.cloud:spring-cloud-starter-aws:${springCloudAwsVersion}"
+		implementation "org.springframework.cloud:spring-cloud-starter-aws-messaging:${springCloudAwsVersion}"
 
 		testImplementation "org.junit.jupiter:junit-jupiter-api:${junitJupiterApiVersion}"
 		testImplementation "org.mockito:mockito-core:${mockitoCoreVersion}"

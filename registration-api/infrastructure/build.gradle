@@ -19,6 +19,9 @@ dependencies {
     implementation project(':application:application-model')
     implementation "com.github.bruno303:spring-boot-dracko-mediator-starter"
     implementation 'software.amazon.awssdk:sqs'
+
+    implementation "org.springframework.cloud:spring-cloud-starter-aws"
+    implementation "org.springframework.cloud:spring-cloud-starter-aws-messaging"
 }
 
 bootJar {

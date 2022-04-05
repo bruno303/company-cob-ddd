@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cd etc/localstack
+cd etc/docker
 
 docker-compose up -d

@@ -14,11 +14,24 @@ services:
       - POSTGRES_USER=companycob
       - POSTGRES_DB=companycob
 
-networks: 
-  companycob: 
-
 #####
 # check opened connections:
 #####
 # lsof -nP -i :5432 -sTCP:ESTABLISHED
 #
+
+  localstack:
+    build:
+      context: ./localstack
+    container_name: localstack
+    restart: "no"
+    networks:
+      - companycob
+    ports:
+      - "4566:4566"
+      - "4571:4571"
+    environment:
+      - LOCALSTACK_SERVICES=s3,sqs
+
+networks: 
+  companycob:

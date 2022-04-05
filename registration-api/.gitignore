@@ -44,4 +44,4 @@ out/
 .vscode/
 
 ### Custom ###
-#web/src/main/resources/application.yml
+web/src/main/resources/application.yml

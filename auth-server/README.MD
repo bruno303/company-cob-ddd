@@ -22,7 +22,7 @@ This keycloak container will use an in memory database (H2), but you can stop an
 ---
 
 ## Configuration
-Keycloak works with realms. You can read more about this [here]().
+Keycloak works with realms. You can read more about this [here](https://www.keycloak.org/docs/latest/server_admin/).
 
 When you access the administration page, the default credentials are:
 * user: admin
@@ -30,10 +30,25 @@ When you access the administration page, the default credentials are:
 
 But this can be changed in docker-compose with environment variables.
 
-When you log in in administration page, is recommended that you create a realm named `companycob`.
+When you log in there will be a realm named `companycob`. Make sure to select it. This realm will be used by company-cob-ddd apis.
 
-This realm will be used by company-cob-ddd apis. The default realm name expected is `companycob` but this can be changed in the apis using the environment variable `AUTH_REALM`.
+Inside the realm there will be already a `client` named `registration-api`. 
 
-Then, inside the realm you created, create an `client` named `registration-api`. Again, this is the default value expected by apis, but can be changed with environment variable `AUTH_RESOURCE`.
+Manually, you need to create an `user` named `registration-api-user`. After the user is created, set it's password. The default in the postman collection is `password` but it's recommended to create a different password and change in your postman environment as well.
+Last step of user configuration is define it's roles. Assign the `default-roles-companycob` and `user` roles to the user created.
 
-Last, in the apis is necessary to define the Keycloak URL. By default the expected URL are `http://localhost:8081`, but this can be changed with environment variable `AUTH_URL`
+With this, make a postman call and if everything goes right, you will receive a token.
+
+---
+
+## Consume
+
+In the consumer apis is necessary to define the Keycloak URL, the resource and the realm. See the configuration necessary with default values and environment variabled recommended to change it in each application:
+
+| Attribute | Default | Recommended environemnt variable |
+|---|---|---|
+| Keycloak url | http://localhost:8081 | AUTH_URL |
+| Resource | registration-api | AUTH_RESOURCE |
+| Realm | companycob | AUTH_REALM |
+
+This are recommended settings, but this values can be changed in keycloak and then in each application that consumes keycloak.

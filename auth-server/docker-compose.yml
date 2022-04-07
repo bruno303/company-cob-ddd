@@ -1,8 +1,7 @@
 version: '3.8'
 services:
   keycloak:
-    build:
-      context: .
+    image: quay.io/keycloak/keycloak:15.0.2
     container_name: keycloak
     networks:
       - companycob
@@ -11,7 +10,12 @@ services:
     environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
-      - KEYCLOAK_IMPORT=/tmp/realm-companycob-export.json
+    volumes:
+      - ./realm:/tmp/import
+    command:
+      - "-Dkeycloak.migration.action=import"
+      - "-Dkeycloak.migration.provider=dir"
+      - "-Dkeycloak.migration.dir=/tmp/import"
 
 networks:
   companycob:

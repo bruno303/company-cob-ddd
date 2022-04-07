@@ -32,12 +32,10 @@ But this can be changed in docker-compose with environment variables.
 
 When you log in there will be a realm named `companycob`. Make sure to select it. This realm will be used by company-cob-ddd apis.
 
-Inside the realm there will be already a `client` named `registration-api`. 
+Inside the realm there will be already a `client` named `registration-api`.
+Check if exists an user named `registration-api-user` as well. The default password for this user is `password`. If you change the password in keycloak, don't forget to change in postman's token request too.
 
-Manually, you need to create an `user` named `registration-api-user`. After the user is created, set it's password. The default in the postman collection is `password` but it's recommended to create a different password and change in your postman environment as well.
-Last step of user configuration is define it's roles. Assign the `default-roles-companycob` and `user` roles to the user created.
-
-With this, make a postman call and if everything goes right, you will receive a token.
+Now make a postman call and if everything goes right, you will receive a token.
 
 ---
 
@@ -50,5 +48,15 @@ In the consumer apis is necessary to define the Keycloak URL, the resource and t
 | Keycloak url | http://localhost:8081 | AUTH_URL |
 | Resource | registration-api | AUTH_RESOURCE |
 | Realm | companycob | AUTH_REALM |
+| User | registration-api-user |  |
 
-This are recommended settings, but this values can be changed in keycloak and then in each application that consumes keycloak.
+
+
+## Help with import/export realms
+
+This [link](https://keepgrowing.in/tools/keycloak-in-docker-5-how-to-export-a-realm-with-users-and-secrets/) is very usefull for export a realm with it's users.
+
+### Troubleshoot
+
+#### Permission Denied
+If you create a volume, try export your realm to this volume directory and receive a permission denied error, try recreate the container and change the container user to root.

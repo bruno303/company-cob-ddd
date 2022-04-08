@@ -3,7 +3,7 @@ package com.bso.companycob.infrastructure.aws;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
-import com.bso.companycob.application.model.message.MessageSender;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +19,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @Configuration
+@Slf4j
 public class SqsConfiguration {
 
     @Configuration
@@ -29,12 +30,14 @@ public class SqsConfiguration {
         @Bean
         public SqsClient sqsClient(AwsCredentialsProvider awsCredentialsProvider, Region region) {
             validateAwsEndpoint();
+            log.info("Configuring SqsClient using raw aws sdk and awsEndpoint '{}'", awsEndpoint);
             return SqsClient.builder().endpointOverride(newUri(awsEndpoint)).build();
         }
 
         @Bean
         public SqsAsyncClient sqsAsyncClient(AwsCredentialsProvider awsCredentialsProvider, Region region) {
             validateAwsEndpoint();
+            log.info("Configuring SqsAsyncClient using raw aws sdk and awsEndpoint '{}'", awsEndpoint);
             return SqsAsyncClient.builder().endpointOverride(newUri(awsEndpoint)).build();
         }
 
@@ -58,6 +61,7 @@ public class SqsConfiguration {
     public static class SqsAwsConfiguration {
         @Bean
         public SqsClient sqsClient(AwsCredentialsProvider awsCredentialsProvider, Region region) {
+            log.info("Configuring SqsClient using raw aws sdk");
             return SqsClient.builder()
                     .credentialsProvider(awsCredentialsProvider)
                     .region(region)
@@ -66,6 +70,7 @@ public class SqsConfiguration {
 
         @Bean
         public SqsAsyncClient sqsAsyncClient(AwsCredentialsProvider awsCredentialsProvider, Region region) {
+            log.info("Configuring SqsAsyncClient using raw aws sdk");
             return SqsAsyncClient.builder()
                     .credentialsProvider(awsCredentialsProvider)
                     .region(region)
@@ -75,6 +80,7 @@ public class SqsConfiguration {
 
     @Bean
     public QueueMessagingTemplate queueMessagingTemplate(AmazonSQSAsync amazonSQSAsync) {
+        log.info("Configuring QueueMessagingTemplate using spring cloud");
         return new QueueMessagingTemplate(amazonSQSAsync);
     }
 

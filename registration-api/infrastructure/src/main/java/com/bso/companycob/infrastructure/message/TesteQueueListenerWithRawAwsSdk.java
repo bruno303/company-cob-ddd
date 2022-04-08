@@ -1,5 +1,6 @@
 package com.bso.companycob.infrastructure.message;
 
+import com.bso.companycob.application.model.async.AsyncRunner;
 import com.bso.companycob.application.model.json.JsonUtil;
 import com.bso.companycob.application.model.message.MessageListener;
 import com.bso.companycob.infrastructure.aws.OnUseRawAwsSdkEnabled;
@@ -10,7 +11,6 @@ import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.Message;
 
 import javax.annotation.PostConstruct;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -22,13 +22,16 @@ public class TesteQueueListenerWithRawAwsSdk extends SqsMessageReaderAdapter imp
 
     private final MessagingQueueProperties messagingQueueProperties;
     private final SqsMessageDeleter sqsMessageDeleter;
-    private final ExecutorService executor = Executors.newFixedThreadPool(4);
+    private final AsyncRunner asyncRunner;
+    private final ExecutorService listenerExecutor = Executors.newFixedThreadPool(4);
+    private final ExecutorService processorExecutor = Executors.newFixedThreadPool(4);
 
     public TesteQueueListenerWithRawAwsSdk(SqsClient sqsClient, JsonUtil jsonUtil, MessagingQueueProperties messagingQueueProperties,
-                                           SqsMessageDeleter sqsMessageDeleter) {
+                                           SqsMessageDeleter sqsMessageDeleter, AsyncRunner asyncRunner) {
         super(sqsClient, jsonUtil);
         this.messagingQueueProperties = messagingQueueProperties;
         this.sqsMessageDeleter = sqsMessageDeleter;
+        this.asyncRunner = asyncRunner;
     }
 
     @PostConstruct
@@ -38,15 +41,16 @@ public class TesteQueueListenerWithRawAwsSdk extends SqsMessageReaderAdapter imp
     }
 
     @Override
-    @SuppressWarnings("InfiniteLoopStatement")
     public void read() {
-        CompletableFuture.runAsync(() -> {
-            while (true) {
-                var messages = super.read(messagingQueueProperties.getTesteQueue());
-                messages.forEach(this::handle);
-                sleep();
-            }
-        }, executor);
+        asyncRunner.run(this::doRead, Executors.newSingleThreadExecutor());
+    }
+
+    private void doRead() {
+        while (true) {
+            asyncRunner.run(() -> super.read(messagingQueueProperties.getTesteQueue()), listenerExecutor)
+                    .thenAcceptAsync(messages -> messages.forEach(this::handle), processorExecutor);
+            sleep();
+        }
     }
 
     private void handle(Message message) {
@@ -57,7 +61,7 @@ public class TesteQueueListenerWithRawAwsSdk extends SqsMessageReaderAdapter imp
 
     private void sleep() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             e.printStackTrace();

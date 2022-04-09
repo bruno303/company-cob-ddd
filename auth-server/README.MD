@@ -22,7 +22,7 @@ This keycloak container will use an in memory database (H2), but you can stop an
 ---
 
 ## Configuration
-Keycloak works with realms. You can read more about this [here]().
+Keycloak works with realms. You can read more about this [here](https://www.keycloak.org/docs/latest/server_admin/).
 
 When you access the administration page, the default credentials are:
 * user: admin
@@ -30,10 +30,33 @@ When you access the administration page, the default credentials are:
 
 But this can be changed in docker-compose with environment variables.
 
-When you log in in administration page, is recommended that you create a realm named `companycob`.
+When you log in there will be a realm named `companycob`. Make sure to select it. This realm will be used by company-cob-ddd apis.
 
-This realm will be used by company-cob-ddd apis. The default realm name expected is `companycob` but this can be changed in the apis using the environment variable `AUTH_REALM`.
+Inside the realm there will be already a `client` named `registration-api`.
+Check if exists an user named `registration-api-user` as well. The default password for this user is `password`. If you change the password in keycloak, don't forget to change in postman's token request too.
 
-Then, inside the realm you created, create an `client` named `registration-api`. Again, this is the default value expected by apis, but can be changed with environment variable `AUTH_RESOURCE`.
+Now make a postman call and if everything goes right, you will receive a token.
 
-Last, in the apis is necessary to define the Keycloak URL. By default the expected URL are `http://localhost:8081`, but this can be changed with environment variable `AUTH_URL`
+---
+
+## Consume
+
+In the consumer apis is necessary to define the Keycloak URL, the resource and the realm. See the configuration necessary with default values and environment variabled recommended to change it in each application:
+
+| Attribute | Default | Recommended environemnt variable |
+|---|---|---|
+| Keycloak url | http://localhost:8081 | AUTH_URL |
+| Resource | registration-api | AUTH_RESOURCE |
+| Realm | companycob | AUTH_REALM |
+| User | registration-api-user |  |
+
+
+
+## Help with import/export realms
+
+This [link](https://keepgrowing.in/tools/keycloak-in-docker-5-how-to-export-a-realm-with-users-and-secrets/) is very usefull for export a realm with it's users.
+
+### Troubleshoot
+
+#### Permission Denied
+If you create a volume, try export your realm to this volume directory and receive a permission denied error, try recreate the container and change the container user to root.

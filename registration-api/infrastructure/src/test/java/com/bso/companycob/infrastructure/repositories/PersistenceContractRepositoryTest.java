@@ -37,27 +37,7 @@ public class PersistenceContractRepositoryTest extends AbstractIntegrationTest {
         assertThat(contractSaved.getNumber()).isEqualTo(contract.getNumber());
         assertThat(contractSaved.getDate()).isEqualTo(contract.getDate());
         assertThat(contractSaved.getCalcType()).isEqualTo(contract.getCalcType());
-        assertThat(contractSaved.getQuotas().size()).isEqualTo(2);
-
-        contractSaved.getQuotas().forEach(quotaSaved -> {
-            var quotaOpt = contract.getQuotas().stream().filter(q -> q.getId().equals(quotaSaved.getId())).findAny();
-            assertThat(quotaOpt).isPresent();
-
-            var quota = quotaOpt.get();
-            assertThat(quotaSaved.getId()).isEqualTo(quota.getId());
-            assertThat(quotaSaved.getAmount()).isEqualByComparingTo(quota.getAmount());
-            assertThat(quotaSaved.getUpdatedAmount()).isEqualByComparingTo(quota.getUpdatedAmount());
-            assertThat(quotaSaved.getDate()).isEqualTo(quota.getDate());
-            assertThat(quotaSaved.getDateUpdated()).isEqualTo(quota.getDateUpdated());
-            assertThat(quotaSaved.getNumber()).isEqualTo(quota.getNumber());
-            assertThat(quotaSaved.getStatus()).isEqualTo(quota.getStatus());
-            assertThat(quotaSaved.getContract().getId()).isEqualTo(quota.getContract().getId());
-        });
-
-        Bank bank = contractSaved.getBank();
-        assertThat(bank.getId()).isEqualTo(contract.getBank().getId());
-        assertThat(bank.getName()).isEqualTo(contract.getBank().getName());
-        assertThat(bank.getInterestRate()).isEqualByComparingTo(contract.getBank().getInterestRate());
+        assertThat(contractSaved.getBankId()).isEqualTo(contract.getBankId());
     }
 
     @Test
@@ -93,12 +73,15 @@ public class PersistenceContractRepositoryTest extends AbstractIntegrationTest {
     }
 
     private Contract createContract(UUID id, String number) {
+        Bank bank = createBank();
+
         var contract = new Contract();
         contract.setId(id);
         contract.setNumber(number);
         contract.setDate(LocalDate.now());
         contract.setCalcType(CalcType.DEFAULT.getValue());
-        contract.setBank(createBank());
+        contract.setBank(bank);
+        contract.setBankId(bank.getId());
         contract.setQuotas(createQuotas(contract, 2));
 
         return contractRepository.save(contract);
@@ -116,7 +99,7 @@ public class PersistenceContractRepositoryTest extends AbstractIntegrationTest {
             quota.setNumber(1);
             quota.setStatus(1);
             quota.setUpdatedAmount(BigDecimal.TEN);
-            quota.setContract(contract);
+            quota.setContractId(contract.getId());
 
             quotas.add(quota);
         }

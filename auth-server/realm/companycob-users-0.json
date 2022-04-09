@@ -1,0 +1,23 @@
+{
+  "realm" : "companycob",
+  "users" : [ {
+    "id" : "589f0e30-f5aa-4db6-a95d-bf02cad3e23f",
+    "createdTimestamp" : 1649294254189,
+    "username" : "registration-api-user",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "id" : "a8bb992d-4e8d-43ed-97b5-ae75b71d4bfa",
+      "type" : "password",
+      "createdDate" : 1649294261870,
+      "secretData" : "{\"value\":\"leq8ogqLsco5qTTG0ebBgtb9D81DIvzlXRwx255gG27GpEe3NYSffdPK3ypDlM4CoqIILln5mUbFHhTUMeIPvQ==\",\"salt\":\"g4FBPProK9GptT5UKalfoQ==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "user", "default-roles-companycob" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}

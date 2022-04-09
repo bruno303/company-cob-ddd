@@ -1,19 +1,15 @@
 package com.bso.companycob.infrastructure.entities;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.UUID;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.bso.companycob.domain.enums.QuotaStatus;
-import lombok.Getter;
-import lombok.Setter;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Table(name = "QUOTA")
@@ -43,24 +39,8 @@ public class Quota implements PersistenceEntity {
     @Column(name = "DATE_UPDATED")
     private LocalDate dateUpdated;
 
-    @ManyToOne(optional = false, targetEntity = Contract.class)
-    @JoinColumn(name = "CONTRACT_ID", nullable = false, referencedColumnName = "ID")
-    private Contract contract;
- 
-    public com.bso.companycob.domain.entity.contract.Quota toDomainQuota() {
-        return new com.bso.companycob.domain.entity.contract.Quota(id, number, amount, updatedAmount, date, QuotaStatus.fromValue(status), dateUpdated);
-    }
-
-    public static Quota fromDomainQuota(com.bso.companycob.domain.entity.contract.Quota quota) {
-        var persistenceQuota = new Quota();
-        persistenceQuota.setId(quota.getId());
-        persistenceQuota.setNumber(quota.getNumber());
-        persistenceQuota.setAmount(quota.getAmount());
-        persistenceQuota.setUpdatedAmount(quota.getUpdatedAmount());
-        persistenceQuota.setDate(quota.getDate());
-        persistenceQuota.setStatus(quota.getStatus().getValue());
-        persistenceQuota.setDateUpdated(quota.getDateUpdated());
-
-        return persistenceQuota;
-    }
+//    @ManyToOne(optional = false, targetEntity = Contract.class)
+//    @JoinColumn(name = "CONTRACT_ID", nullable = false, referencedColumnName = "ID")
+    @Column(name = "CONTRACT_ID", nullable = false)
+    private UUID contractId;
 }

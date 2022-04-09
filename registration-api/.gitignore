@@ -42,3 +42,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Custom ###
+web/src/main/resources/application.yml

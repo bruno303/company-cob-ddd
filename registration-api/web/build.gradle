@@ -34,3 +34,15 @@ publishing {
         }
     }
 }
+
+bootRun {
+    def separator = '#'
+    if (project.hasProperty('jvmArgs')) {
+        String projectJvmArgs = project.property('jvmArgs')
+        println('jvmArgs are present: ' + projectJvmArgs)
+
+        def projectJvmArgsSplitted = projectJvmArgs.split(separator)
+        println('jvmArgs splitted: ' + projectJvmArgsSplitted)
+        jvmArgs projectJvmArgsSplitted
+    }
+}

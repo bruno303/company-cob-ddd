@@ -5,6 +5,7 @@ import com.bso.companycob.infrastructure.aws.OnUseRawAwsSdkDisabled;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 @RequiredArgsConstructor
 @OnUseRawAwsSdkDisabled
 @Slf4j
+@Profile("!tests")
 public class SqsMessageSenderAdapterWithSpringCloud implements MessageSender {
 
     private final QueueMessagingTemplate sqsMessagingTemplate;

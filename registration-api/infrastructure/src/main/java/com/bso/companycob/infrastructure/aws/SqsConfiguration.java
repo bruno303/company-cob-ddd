@@ -20,6 +20,7 @@ import java.net.URISyntaxException;
 
 @Configuration
 @Slf4j
+@Profile("!tests")
 public class SqsConfiguration {
 
     @Configuration

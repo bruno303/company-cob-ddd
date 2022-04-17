@@ -40,3 +40,5 @@ cloud:
   aws:
     stack:
       auto: false
+    region:
+      use-default-aws-region-chain: true

@@ -5,6 +5,7 @@ import com.bso.companycob.application.model.message.MessageSender;
 import com.bso.companycob.infrastructure.aws.OnUseRawAwsSdkEnabled;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 import software.amazon.awssdk.services.sqs.SqsClient;
@@ -16,6 +17,7 @@ import javax.annotation.PostConstruct;
 @RequiredArgsConstructor
 @OnUseRawAwsSdkEnabled
 @Slf4j
+@Profile("!tests")
 public class SqsMessageSenderAdapterWithRawAwsSdk implements MessageSender {
 
     private final SqsClient sqsClient;

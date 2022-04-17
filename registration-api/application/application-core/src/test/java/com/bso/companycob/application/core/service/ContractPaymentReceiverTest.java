@@ -9,12 +9,14 @@ import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.bso.companycob.application.core.dto.PaymentDTO;
+import com.bso.companycob.application.core.service.ContractPaymentReceiver;
+import com.bso.companycob.application.model.dto.PaymentDTO;
 import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.events.EventRaiser;
 import com.bso.companycob.domain.exception.ContractNotFoundException;
 import com.bso.companycob.domain.repositories.ContractRepository;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -39,8 +41,8 @@ class ContractPaymentReceiverTest {
 
         contractPaymentReceiver.receivePayment(dto);
 
-        verify(contractRepository, times(1)).findById(dto.getContractId());
-        verify(contract, times(1)).receivePayment(dto.getAmount());
+        Mockito.verify(contractRepository, Mockito.times(1)).findById(dto.getContractId());
+        Mockito.verify(contract, Mockito.times(1)).receivePayment(dto.getAmount());
     }
 
     @Test
@@ -53,10 +55,10 @@ class ContractPaymentReceiverTest {
         var exception = assertThrows(ContractNotFoundException.class,
                 () -> contractPaymentReceiver.receivePayment(dto));
 
-        assertThat(exception.getContractId()).isEqualByComparingTo(dto.getContractId());
+        Assertions.assertThat(exception.getContractId()).isEqualByComparingTo(dto.getContractId());
 
-        verify(contractRepository, times(1)).findById(dto.getContractId());
-        verify(contract, times(0)).updateDebtAmount();
+        Mockito.verify(contractRepository, Mockito.times(1)).findById(dto.getContractId());
+        Mockito.verify(contract, Mockito.times(0)).updateDebtAmount();
     }
 
     private Contract createContractMock() {

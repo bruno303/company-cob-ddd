@@ -1,7 +1,7 @@
 package com.bso.companycob.registration.controller;
 
-import com.bso.companycob.application.core.bus.request.ContractGetAllRequest;
-import com.bso.companycob.application.core.bus.response.ContractGetAllResponse;
+import com.bso.companycob.application.model.bus.request.ContractGetAllRequest;
+import com.bso.companycob.application.model.bus.response.ContractGetAllResponse;
 import com.bso.companycob.registration.config.CompanyCobController;
 import com.bso.dracko.mediator.contract.Mediator;
 

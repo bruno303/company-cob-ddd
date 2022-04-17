@@ -1,18 +1,16 @@
 package com.bso.companycob.application.core.service;
 
-import com.bso.companycob.application.core.dto.bank.BankCreationDTO;
-import com.bso.companycob.application.core.factory.bank.BankFactory;
+import com.bso.companycob.application.model.annotations.RegisterDI;
+import com.bso.companycob.application.model.dto.bank.BankCreationDTO;
+import com.bso.companycob.application.model.factory.BankFactory;
 import com.bso.companycob.domain.entity.bank.Bank;
 import com.bso.companycob.domain.repositories.BankRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Component
+@RegisterDI
 @RequiredArgsConstructor
-@Transactional
 public class BankCrudService {
 
     private final BankFactory bankFactory;

@@ -1,11 +1,11 @@
 package com.bso.companycob.application.core.handlers.command;
 
-import com.bso.companycob.application.core.bus.request.ContractCreationRequest;
-import com.bso.companycob.application.core.bus.response.ContractCreationResponse;
-import com.bso.companycob.application.core.events.contract.creation.ContractCreatedEvent;
-import com.bso.companycob.application.core.factory.contract.ContractFactory;
-import com.bso.companycob.application.core.factory.quota.QuotaFactory;
-import com.bso.companycob.application.core.handlers.requests.ContractCreationRequestHandler;
+import com.bso.companycob.application.model.bus.request.ContractCreationRequest;
+import com.bso.companycob.application.model.bus.response.ContractCreationResponse;
+import com.bso.companycob.application.model.event.ContractCreatedEvent;
+import com.bso.companycob.application.model.factory.ContractFactory;
+import com.bso.companycob.application.model.factory.QuotaFactory;
+import com.bso.companycob.application.core.handler.request.ContractCreationRequestHandler;
 import com.bso.companycob.application.core.lock.ContractLockeable;
 import com.bso.companycob.application.model.lock.Callable;
 import com.bso.companycob.application.model.lock.LockManager;
@@ -14,22 +14,17 @@ import com.bso.companycob.domain.enums.CalcType;
 import com.bso.companycob.domain.events.EventRaiser;
 import com.bso.companycob.domain.exception.ContractAlreadyExistsException;
 import com.bso.companycob.domain.repositories.ContractWriterRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowableOfType;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class ContractCreationRequestHandlerTest {
 
@@ -52,58 +47,58 @@ public class ContractCreationRequestHandlerTest {
         final String number = "XPTO";
         ArgumentCaptor<Callable<ContractCreationResponse>> callableCaptor = ArgumentCaptor.forClass(Callable.class);
 
-        when(contractFactoryMock.create(Mockito.anyString(), any(LocalDate.class), any(UUID.class), Mockito.anyList(), Mockito.eq(CalcType.DEFAULT)))
+        Mockito.when(contractFactoryMock.create(Mockito.anyString(), ArgumentMatchers.any(LocalDate.class), ArgumentMatchers.any(UUID.class), Mockito.anyList(), Mockito.eq(CalcType.DEFAULT)))
             .thenReturn(contractMockResponse);
 
-        when(contractWriterRepositoryMock.findByNumber(number)).thenReturn(Optional.empty());
+        Mockito.when(contractWriterRepositoryMock.findByNumber(number)).thenReturn(Optional.empty());
 
-        when(contractWriterRepositoryMock.saveAndFlush(any(Contract.class)))
+        Mockito.when(contractWriterRepositoryMock.saveAndFlush(ArgumentMatchers.any(Contract.class)))
             .thenReturn(contractMockResponse);
 
-        when(lockManagerMock.lockAndProcess(any(ContractLockeable.class), any(Callable.class)))
+        Mockito.when(lockManagerMock.lockAndProcess(ArgumentMatchers.any(ContractLockeable.class), ArgumentMatchers.any(Callable.class)))
                 .thenReturn(contractCreationMockResponse);
 
         var cmd = new ContractCreationRequest(number, LocalDate.now(), UUID.randomUUID(), Collections.emptyList(), CalcType.DEFAULT);
         handler.handle(cmd);
 
-        verify(lockManagerMock, times(1)).lockAndProcess(any(ContractLockeable.class), callableCaptor.capture());
+        Mockito.verify(lockManagerMock, Mockito.times(1)).lockAndProcess(ArgumentMatchers.any(ContractLockeable.class), callableCaptor.capture());
 
         // call the runnable captured. Then do the verifys bellow
         callableCaptor.getValue().call();
 
-        verify(contractFactoryMock, times(1)).create(Mockito.anyString(), any(LocalDate.class), any(UUID.class), Mockito.anyList(), Mockito.eq(CalcType.DEFAULT));
-        verify(contractWriterRepositoryMock, times(1)).saveAndFlush(any(Contract.class));
-        verify(contractWriterRepositoryMock, times(1)).findByNumber(number);
-        verify(eventRaiserMock, times(1)).raise(any(ContractCreatedEvent.class));
-        verify(quotaFactory, times(0)).create(any(ContractCreationRequest.QuotaData.class));
+        Mockito.verify(contractFactoryMock, Mockito.times(1)).create(Mockito.anyString(), ArgumentMatchers.any(LocalDate.class), ArgumentMatchers.any(UUID.class), Mockito.anyList(), Mockito.eq(CalcType.DEFAULT));
+        Mockito.verify(contractWriterRepositoryMock, Mockito.times(1)).saveAndFlush(ArgumentMatchers.any(Contract.class));
+        Mockito.verify(contractWriterRepositoryMock, Mockito.times(1)).findByNumber(number);
+        Mockito.verify(eventRaiserMock, Mockito.times(1)).raise(ArgumentMatchers.any(ContractCreatedEvent.class));
+        Mockito.verify(quotaFactory, Mockito.times(0)).create(ArgumentMatchers.any(ContractCreationRequest.QuotaData.class));
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void testCreatingContractWhenContractAlreadyExists() {
         final String number = "XPTO";
-        ArgumentCaptor<Callable> callableCaptor = ArgumentCaptor.forClass(Callable.class);
+        ArgumentCaptor<Callable<?>> callableCaptor = ArgumentCaptor.forClass(Callable.class);
 
-        when(contractWriterRepositoryMock.findByNumber(number)).thenReturn(Optional.of(contractMockResponse));
+        Mockito.when(contractWriterRepositoryMock.findByNumber(number)).thenReturn(Optional.of(contractMockResponse));
 
-        when(lockManagerMock.lockAndProcess(any(ContractLockeable.class), any(Callable.class)))
+        Mockito.when(lockManagerMock.lockAndProcess(ArgumentMatchers.any(ContractLockeable.class), ArgumentMatchers.any(Callable.class)))
                 .thenReturn(contractCreationMockResponse);
 
         var request = new ContractCreationRequest(number, LocalDate.now(), UUID.randomUUID(), Collections.emptyList(), CalcType.DEFAULT);
         handler.handle(request);
 
-        verify(lockManagerMock, times(1)).lockAndProcess(any(ContractLockeable.class), callableCaptor.capture());
+        Mockito.verify(lockManagerMock, Mockito.times(1)).lockAndProcess(ArgumentMatchers.any(ContractLockeable.class), callableCaptor.capture());
 
         // call the callable captured. Then do the verifys bellow
-        Callable callable = callableCaptor.getValue();
-        ContractAlreadyExistsException ex = catchThrowableOfType(callable::call, ContractAlreadyExistsException.class);
+        Callable<?> callable = callableCaptor.getValue();
+        ContractAlreadyExistsException ex = Assertions.catchThrowableOfType(callable::call, ContractAlreadyExistsException.class);
 
-        assertThat(ex).isExactlyInstanceOf(ContractAlreadyExistsException.class);
+        Assertions.assertThat(ex).isExactlyInstanceOf(ContractAlreadyExistsException.class);
 
-        verify(contractFactoryMock, times(0)).create(Mockito.anyString(), any(LocalDate.class), any(UUID.class), Mockito.anyList(), Mockito.any(CalcType.class));
-        verify(contractWriterRepositoryMock, times(0)).saveAndFlush(any(Contract.class));
-        verify(contractWriterRepositoryMock, times(1)).findByNumber(number);
-        verify(eventRaiserMock, times(0)).raise(any(ContractCreatedEvent.class));
-        verify(quotaFactory, times(0)).create(any(ContractCreationRequest.QuotaData.class));
+        Mockito.verify(contractFactoryMock, Mockito.times(0)).create(Mockito.anyString(), ArgumentMatchers.any(LocalDate.class), ArgumentMatchers.any(UUID.class), Mockito.anyList(), Mockito.any(CalcType.class));
+        Mockito.verify(contractWriterRepositoryMock, Mockito.times(0)).saveAndFlush(ArgumentMatchers.any(Contract.class));
+        Mockito.verify(contractWriterRepositoryMock, Mockito.times(1)).findByNumber(number);
+        Mockito.verify(eventRaiserMock, Mockito.times(0)).raise(ArgumentMatchers.any(ContractCreatedEvent.class));
+        Mockito.verify(quotaFactory, Mockito.times(0)).create(ArgumentMatchers.any(ContractCreationRequest.QuotaData.class));
     }
 }

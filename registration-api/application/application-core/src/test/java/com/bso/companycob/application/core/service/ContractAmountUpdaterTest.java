@@ -1,25 +1,23 @@
 package com.bso.companycob.application.core.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-
-import java.util.Optional;
-import java.util.UUID;
-
-import com.bso.companycob.application.core.dto.ContractDTO;
 import com.bso.companycob.application.core.lock.ContractLockeable;
+import com.bso.companycob.application.model.dto.ContractDTO;
 import com.bso.companycob.application.model.lock.LockManager;
 import com.bso.companycob.application.model.lock.Lockeable;
 import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.exception.ContractNotFoundException;
 import com.bso.companycob.domain.repositories.ContractRepository;
-
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ContractAmountUpdaterTest {
 
@@ -45,12 +43,12 @@ class ContractAmountUpdaterTest {
 
         Mockito.verify(lockManager).lockAndConsume(lockeableCaptor.capture(), runnableCaptor.capture());
 
-        Mockito.verify(contractRepository, times(1)).findById(dto.getContractId());
-        Mockito.verify(lockManager, times(1)).lockAndConsume(any(ContractLockeable.class), any());
+        Mockito.verify(contractRepository, Mockito.times(1)).findById(dto.getContractId());
+        Mockito.verify(lockManager, Mockito.times(1)).lockAndConsume(ArgumentMatchers.any(ContractLockeable.class), ArgumentMatchers.any());
 
         // capture the method running inside lock, call it and then verify if it was as expected
         runnableCaptor.getValue().run();
-        Mockito.verify(contract, times(1)).updateDebtAmount();
+        Mockito.verify(contract, Mockito.times(1)).updateDebtAmount();
     }
 
     @Test
@@ -63,10 +61,10 @@ class ContractAmountUpdaterTest {
         var exception = assertThrows(ContractNotFoundException.class,
                 () -> contractAmountUpdater.updateAmount(dto));
 
-        assertThat(exception.getContractId()).isEqualByComparingTo(dto.getContractId());
+        Assertions.assertThat(exception.getContractId()).isEqualByComparingTo(dto.getContractId());
 
-        Mockito.verify(contractRepository, times(1)).findById(dto.getContractId());
-        Mockito.verify(contract, times(0)).updateDebtAmount();
+        Mockito.verify(contractRepository, Mockito.times(1)).findById(dto.getContractId());
+        Mockito.verify(contract, Mockito.times(0)).updateDebtAmount();
     }
 
     private Contract createContractMock() {

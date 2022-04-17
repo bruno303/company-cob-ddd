@@ -1,11 +1,14 @@
 package com.bso.companycob.application.core.service;
 
-import com.bso.companycob.application.core.dto.bank.BankCreationDTO;
-import com.bso.companycob.application.core.factory.bank.BankFactory;
+import com.bso.companycob.application.core.service.BankCrudService;
+import com.bso.companycob.application.model.dto.bank.BankCreationDTO;
+import com.bso.companycob.application.model.factory.BankFactory;
 import com.bso.companycob.domain.entity.bank.Bank;
 import com.bso.companycob.domain.repositories.BankRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
@@ -32,25 +35,25 @@ public class BankCrudServiceTest {
         final String bankName = "Bank 1";
         final BigDecimal interestRate = BigDecimal.valueOf(0.1);
         final Bank bank = new Bank(UUID.randomUUID(), bankName, interestRate);
-        when(bankFactoryMock.create(eq(bankName), any(BigDecimal.class))).thenReturn(bank);
-        when(bankRepositoryMock.saveAndFlush(any(Bank.class))).thenReturn(bank);
+        Mockito.when(bankFactoryMock.create(ArgumentMatchers.eq(bankName), ArgumentMatchers.any(BigDecimal.class))).thenReturn(bank);
+        Mockito.when(bankRepositoryMock.saveAndFlush(ArgumentMatchers.any(Bank.class))).thenReturn(bank);
 
         var dto = new BankCreationDTO(bankName, interestRate);
         Bank bankCreated = bankCrudService.create(dto);
-        assertThat(bankCreated.getId()).isEqualByComparingTo(bank.getId());
-        assertThat(bankCreated.getName()).isEqualTo(bankName);
-        assertThat(bankCreated.getInterestRate()).isEqualByComparingTo(interestRate);
+        Assertions.assertThat(bankCreated.getId()).isEqualByComparingTo(bank.getId());
+        Assertions.assertThat(bankCreated.getName()).isEqualTo(bankName);
+        Assertions.assertThat(bankCreated.getInterestRate()).isEqualByComparingTo(interestRate);
 
-        Mockito.verify(bankFactoryMock, Mockito.times(1)).create(eq(bankName), any(BigDecimal.class));
-        Mockito.verify(bankRepositoryMock, Mockito.times(1)).saveAndFlush(any(Bank.class));
+        Mockito.verify(bankFactoryMock, Mockito.times(1)).create(ArgumentMatchers.eq(bankName), ArgumentMatchers.any(BigDecimal.class));
+        Mockito.verify(bankRepositoryMock, Mockito.times(1)).saveAndFlush(ArgumentMatchers.any(Bank.class));
     }
 
     @Test
     public void testFindAllCallFindAllMethodFromRepository() {
-        when(bankRepositoryMock.findAll()).thenReturn(Collections.emptyList());
+        Mockito.when(bankRepositoryMock.findAll()).thenReturn(Collections.emptyList());
 
         List<Bank> all = bankCrudService.findAll();
-        assertThat(all).hasSize(0);
+        Assertions.assertThat(all).hasSize(0);
 
         Mockito.verify(bankRepositoryMock, Mockito.times(1)).findAll();
     }

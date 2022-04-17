@@ -1,6 +1,6 @@
 package com.bso.companycob.registration.controller;
 
-import com.bso.companycob.application.core.dto.bank.BankCreationDTO;
+import com.bso.companycob.application.model.dto.bank.BankCreationDTO;
 import com.bso.companycob.application.core.service.BankCrudService;
 import com.bso.companycob.domain.entity.bank.Bank;
 import com.bso.companycob.registration.config.CompanyCobController;

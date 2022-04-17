@@ -1,17 +1,15 @@
 package com.bso.companycob.application.core.service;
 
-import java.util.Optional;
-
-import com.bso.companycob.application.core.dto.PaymentDTO;
+import com.bso.companycob.application.model.dto.PaymentDTO;
 import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.events.EventRaiser;
 import com.bso.companycob.domain.exception.ContractNotFoundException;
 import com.bso.companycob.domain.repositories.ContractRepository;
-
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-@Service
+import java.util.Optional;
+
+//@Service
 @RequiredArgsConstructor
 public class ContractPaymentReceiver {
 

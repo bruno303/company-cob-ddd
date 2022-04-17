@@ -1,12 +1,13 @@
 package com.bso.companycob.application.core.handlers.query;
 
-import com.bso.companycob.application.core.bus.request.ContractGetAllRequest;
-import com.bso.companycob.application.core.bus.response.ContractGetAllResponse;
-import com.bso.companycob.application.core.handlers.requests.ContractGetAllRequestHandler;
+import com.bso.companycob.application.model.bus.request.ContractGetAllRequest;
+import com.bso.companycob.application.model.bus.response.ContractGetAllResponse;
+import com.bso.companycob.application.core.handler.request.ContractGetAllRequestHandler;
 import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.entity.contract.QuotaCollection;
 import com.bso.companycob.domain.repositories.ContractReaderRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,9 +15,7 @@ import org.mockito.Mockito;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 class ContractGetAllRequestHandlerTest {
 
@@ -34,13 +33,13 @@ class ContractGetAllRequestHandlerTest {
         var quotaCollection = Mockito.mock(QuotaCollection.class);
         var quota = Mockito.mock(Quota.class);
 
-        when(contract.getQuotas()).thenReturn(quotaCollection);
-        when(quotaCollection.getQuotas()).thenReturn(List.of(quota));
+        Mockito.when(contract.getQuotas()).thenReturn(quotaCollection);
+        Mockito.when(quotaCollection.getQuotas()).thenReturn(List.of(quota));
 
-        when(contractReaderRepositoryMock.findAll()).thenReturn(List.of(contract));
+        Mockito.when(contractReaderRepositoryMock.findAll()).thenReturn(List.of(contract));
         List<ContractGetAllResponse> all = handler.handle(new ContractGetAllRequest());
-        assertThat(all).hasSize(1);
+        Assertions.assertThat(all).hasSize(1);
 
-        verify(contractReaderRepositoryMock, times(1)).findAll();
+        Mockito.verify(contractReaderRepositoryMock, Mockito.times(1)).findAll();
     }
 }

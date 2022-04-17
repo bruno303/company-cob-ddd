@@ -1,7 +1,7 @@
 package com.bso.companycob.registration.controller;
 
-import com.bso.companycob.application.core.bus.request.ContractCreationRequest;
-import com.bso.companycob.application.core.bus.response.ContractCreationResponse;
+import com.bso.companycob.application.model.bus.request.ContractCreationRequest;
+import com.bso.companycob.application.model.bus.response.ContractCreationResponse;
 import com.bso.companycob.registration.config.CompanyCobController;
 import com.bso.dracko.mediator.contract.Mediator;
 import lombok.RequiredArgsConstructor;

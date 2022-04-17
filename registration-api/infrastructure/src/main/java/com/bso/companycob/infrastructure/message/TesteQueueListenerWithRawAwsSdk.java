@@ -6,6 +6,7 @@ import com.bso.companycob.application.model.message.MessageListener;
 import com.bso.companycob.infrastructure.aws.OnUseRawAwsSdkEnabled;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.Message;
@@ -16,6 +17,7 @@ import java.util.concurrent.Executors;
 
 @Component
 @OnUseRawAwsSdkEnabled
+@Profile("!tests")
 public class TesteQueueListenerWithRawAwsSdk extends SqsMessageReaderAdapter implements MessageListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TesteQueueListenerWithRawAwsSdk.class);

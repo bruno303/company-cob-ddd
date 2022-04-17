@@ -4,8 +4,49 @@ include 'application'
 include 'test-utils'
 include 'infrastructure'
 include 'web'
+include 'application:application-model'
 include 'application:application-core'
 findProject(':application:application-core')?.name = 'application-core'
 include 'application:application-model'
 findProject(':application:application-model')?.name = 'application-model'
+
+enableFeaturePreview('VERSION_CATALOGS')
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            alias('lombok').to('org.projectlombok', 'lombok').version("${lombokVersion}")
+            alias('junit-api').to('org.junit.jupiter', 'junit-jupiter-api').version("${junitJupiterApiVersion}")
+            alias('junit-engine').to('org.junit.jupiter', 'junit-jupiter-engine').version("${junitJupiterApiVersion}")
+            alias('dracko-mediator').to('com.github.bruno303', 'dracko-mediator').version("${drackoMediatorVersion}")
+            alias('jackson-bom').to('com.fasterxml.jackson', 'jackson-bom').version("${jacksonBomVersion}")
+            alias('jackson-jsr310').to('com.fasterxml.jackson.datatype', 'jackson-datatype-jsr310').withoutVersion()
+            alias('h2').to('com.h2database', 'h2').withoutVersion()
+            alias('postgresql').to('org.postgresql', 'postgresql').withoutVersion()
+            alias('keycloak-bom').to('org.keycloak.bom', 'keycloak-adapter-bom').version("${keycloakVersion}")
+            alias('springfox-swagger-ui').to('io.springfox', 'springfox-swagger-ui').version("${swaggerVersion}")
+            alias('mockito-core').to('org.mockito', 'mockito-core').version("${mockitoCoreVersion}")
+            alias('restassured').to('io.rest-assured', 'rest-assured').version("${restAssuredVersion}")
+            alias('assertj').to('org.assertj', 'assertj-core').version("${assertjVersion}")
+
+            bundle('jackson', [ 'jackson-bom', 'jackson-jsr310' ])
+        }
+        spring {
+            alias('starter-aws-parent').to('org.springframework.cloud', 'spring-cloud-starter-aws').version("${springCloudAwsVersion}")
+            alias('starter-aws-messaging').to('org.springframework.cloud', 'spring-cloud-starter-aws-messaging').version("${springCloudAwsVersion}")
+            alias('starter-test').to('org.springframework.boot', 'spring-boot-starter-test').withoutVersion()
+            alias('starter-data-jpa').to('org.springframework.boot', 'spring-boot-starter-data-jpa').withoutVersion()
+            alias('devtools').to('org.springframework.boot', 'spring-boot-devtools').withoutVersion()
+            alias('processor').to('org.springframework.boot', 'spring-boot-configuration-processor').withoutVersion()
+            alias('starter-dracko-mediator').to('com.github.bruno303', 'spring-boot-dracko-mediator-starter').version("${springBootDrackoMediatorVersion}")
+            alias('starter-keycloak').to('org.keycloak', 'keycloak-spring-boot-starter').version("${keycloakVersion}")
+            alias('starter-web').to('org.springframework.boot', 'spring-boot-starter-web').withoutVersion()
+            alias('starter-security').to('org.springframework.boot', 'spring-boot-starter-security').withoutVersion()
+            alias('starter-springfox').to('io.springfox', 'springfox-boot-starter').version("${swaggerVersion}")
+        }
+        aws {
+            alias('awssdk-sqs').to('software.amazon.awssdk', 'sqs').withoutVersion()
+        }
+    }
+}
 

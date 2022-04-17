@@ -1,6 +1,6 @@
 package com.bso.companycob.registration.controller;
 
-import com.bso.companycob.application.core.bus.response.ContractCreationResponse;
+import com.bso.companycob.application.model.bus.response.ContractCreationResponse;
 import com.bso.companycob.application.model.message.MessageSender;
 import com.bso.companycob.application.model.testemessage.TesteMessageRequest;
 import com.bso.companycob.infrastructure.message.MessagingQueueProperties;

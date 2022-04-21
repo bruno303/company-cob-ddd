@@ -1,6 +1,6 @@
 package com.bso.companycob.infrastructure.events;
 
-import com.bso.companycob.application.model.annotations.RegisterDI;
+import com.bso.companycob.application.annotations.RegisterDI;
 import com.bso.companycob.domain.events.Event;
 import com.bso.companycob.domain.events.EventHandler;
 import com.bso.companycob.domain.events.EventRaiser;

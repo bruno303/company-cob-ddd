@@ -1,7 +1,7 @@
 package com.bso.companycob.infrastructure.message;
 
-import com.bso.companycob.application.model.json.JsonUtil;
-import com.bso.companycob.application.model.message.MessageSender;
+import com.bso.companycob.application.json.JsonUtil;
+import com.bso.companycob.application.message.MessageSender;
 import com.bso.companycob.infrastructure.aws.OnUseRawAwsSdkEnabled;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

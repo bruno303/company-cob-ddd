@@ -13,7 +13,7 @@ dependencies {
 
     testImplementation project(':test-utils')
     implementation project(':domain')
-    implementation project(':application:application-model')
+    implementation project(':application')
 
     implementation spring.starter.dracko.mediator
     implementation platform("software.amazon.awssdk:bom:${awsSdkVersion}")

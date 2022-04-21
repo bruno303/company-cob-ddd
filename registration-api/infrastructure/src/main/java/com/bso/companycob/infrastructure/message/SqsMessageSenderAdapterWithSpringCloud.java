@@ -1,6 +1,6 @@
 package com.bso.companycob.infrastructure.message;
 
-import com.bso.companycob.application.model.message.MessageSender;
+import com.bso.companycob.application.message.MessageSender;
 import com.bso.companycob.infrastructure.aws.OnUseRawAwsSdkDisabled;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

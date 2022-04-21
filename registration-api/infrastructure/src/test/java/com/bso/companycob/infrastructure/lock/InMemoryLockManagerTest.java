@@ -1,8 +1,8 @@
 package com.bso.companycob.infrastructure.lock;
 
-import com.bso.companycob.application.model.async.AsyncRunner;
-import com.bso.companycob.application.model.lock.Lockeable;
-import com.bso.companycob.infrastructure.async.CompletableFutureAsyncRunner;
+import com.bso.companycob.application.async.AsyncRunner;
+import com.bso.companycob.application.async.CompletableFutureAsyncRunner;
+import com.bso.companycob.application.lock.Lockeable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

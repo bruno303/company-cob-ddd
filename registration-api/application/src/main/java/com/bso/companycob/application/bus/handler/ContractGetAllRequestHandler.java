@@ -1,4 +1,4 @@
-package com.bso.companycob.application.bus.request.handler;
+package com.bso.companycob.application.bus.handler;
 
 import com.bso.companycob.application.bus.response.ContractGetAllResponse;
 import com.bso.companycob.application.bus.request.ContractGetAllRequest;

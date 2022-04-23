@@ -1,8 +1,7 @@
-package com.bso.companycob.application.core.handlers.query;
+package com.bso.companycob.application.bus.handler;
 
 import com.bso.companycob.application.bus.request.ContractGetAllRequest;
 import com.bso.companycob.application.bus.response.ContractGetAllResponse;
-import com.bso.companycob.application.bus.request.handler.ContractGetAllRequestHandler;
 import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.entity.contract.QuotaCollection;
@@ -13,9 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
 
 class ContractGetAllRequestHandlerTest {
 
@@ -28,7 +24,7 @@ class ContractGetAllRequestHandlerTest {
     }
 
     @Test
-    public void testGetAllCallFindAllMethodFromRepository() {
+    void testGetAllCallFindAllMethodFromRepository() {
         var contract = Mockito.mock(Contract.class);
         var quotaCollection = Mockito.mock(QuotaCollection.class);
         var quota = Mockito.mock(Quota.class);

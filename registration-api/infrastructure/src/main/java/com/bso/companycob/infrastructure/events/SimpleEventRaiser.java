@@ -1,6 +1,5 @@
 package com.bso.companycob.infrastructure.events;
 
-import com.bso.companycob.application.annotations.RegisterDI;
 import com.bso.companycob.domain.events.Event;
 import com.bso.companycob.domain.events.EventHandler;
 import com.bso.companycob.domain.events.EventRaiser;
@@ -9,11 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.ResolvableType;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.stream.Stream;
 
-@RegisterDI
+@Component
 @RequiredArgsConstructor
 public class SimpleEventRaiser implements EventRaiser {
 

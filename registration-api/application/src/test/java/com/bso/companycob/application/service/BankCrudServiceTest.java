@@ -1,4 +1,4 @@
-package com.bso.companycob.application.core.service;
+package com.bso.companycob.application.service;
 
 import com.bso.companycob.application.dto.bank.BankCreationDTO;
 import com.bso.companycob.application.factory.BankFactory;
@@ -18,7 +18,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BankCrudServiceTest {
+class BankCrudServiceTest {
 
     private BankCrudService bankCrudService;
     private final BankFactory bankFactoryMock = Mockito.mock(BankFactory.class);
@@ -30,7 +30,7 @@ public class BankCrudServiceTest {
     }
 
     @Test
-    public void createShouldCallFactoryAndRepository() {
+    void createShouldCallFactoryAndRepository() {
         final String bankName = "Bank 1";
         final BigDecimal interestRate = BigDecimal.valueOf(0.1);
         final Bank bank = new Bank(UUID.randomUUID(), bankName, interestRate);
@@ -48,11 +48,11 @@ public class BankCrudServiceTest {
     }
 
     @Test
-    public void testFindAllCallFindAllMethodFromRepository() {
+    void testFindAllCallFindAllMethodFromRepository() {
         Mockito.when(bankRepositoryMock.findAll()).thenReturn(Collections.emptyList());
 
         List<Bank> all = bankCrudService.findAll();
-        Assertions.assertThat(all).hasSize(0);
+        Assertions.assertThat(all).isEmpty();
 
         Mockito.verify(bankRepositoryMock, Mockito.times(1)).findAll();
     }

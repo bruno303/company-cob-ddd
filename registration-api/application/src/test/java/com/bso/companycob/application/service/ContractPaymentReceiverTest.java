@@ -1,24 +1,20 @@
-package com.bso.companycob.application.core.service;
+package com.bso.companycob.application.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
+import com.bso.companycob.application.dto.PaymentDTO;
+import com.bso.companycob.domain.entity.contract.Contract;
+import com.bso.companycob.domain.events.EventRaiser;
+import com.bso.companycob.domain.exception.ContractNotFoundException;
+import com.bso.companycob.domain.repositories.ContractRepository;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.bso.companycob.application.dto.PaymentDTO;
-import com.bso.companycob.application.service.ContractPaymentReceiver;
-import com.bso.companycob.domain.entity.contract.Contract;
-import com.bso.companycob.domain.events.EventRaiser;
-import com.bso.companycob.domain.exception.ContractNotFoundException;
-import com.bso.companycob.domain.repositories.ContractRepository;
-
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ContractPaymentReceiverTest {
 

@@ -1,6 +1,6 @@
-package com.bso.companycob.infrastructure.factory.contract;
+package com.bso.companycob.application.factory.contract;
 
-import com.bso.companycob.infrastructure.factory.contract.ContractFactoryImpl;
+import com.bso.companycob.application.factory.ContractFactoryImpl;
 import com.bso.companycob.domain.entity.bank.Bank;
 import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.enums.CalcType;
@@ -20,7 +20,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ContractFactoryImplTest {
+class ContractFactoryImplTest {
 
     private ContractFactoryImpl contractFactory;
     private final BankRepository bankRepositoryMock = Mockito.mock(BankRepository.class);
@@ -31,23 +31,25 @@ public class ContractFactoryImplTest {
     }
 
     @Test
-    public void createMustCallBankRepositoryAndThrowErrorIfReturnEmpty() {
+    void createMustCallBankRepositoryAndThrowErrorIfReturnEmpty() {
         final UUID bankId = UUID.randomUUID();
         Mockito.when(bankRepositoryMock.findById(Mockito.any(UUID.class))).thenReturn(Optional.empty());
 
         Quota quota = createQuota();
 
         UUID id = UUID.randomUUID();
+        var now = LocalDate.now();
+        var quotas = List.of(quota);
 
         var exception = assertThrows(BankNotFoundException.class, () -> contractFactory.create(id, "XPTO",
-                LocalDate.now(), bankId, List.of(quota), CalcType.DEFAULT));
+                now, bankId, quotas, CalcType.DEFAULT));
         assertThat(exception.getBankId()).isEqualByComparingTo(bankId);
 
-        Mockito.verify(bankRepositoryMock, Mockito.times(1)).findById(Mockito.eq(bankId));
+        Mockito.verify(bankRepositoryMock, Mockito.times(1)).findById(bankId);
     }
 
     @Test
-    public void createMustCallBankRepositoryAndGetSuccess() {
+    void createMustCallBankRepositoryAndGetSuccess() {
         final UUID bankId = UUID.randomUUID();
         Mockito.when(bankRepositoryMock.findById(Mockito.any(UUID.class))).thenReturn(Optional.of(createBank(bankId)));
 
@@ -58,7 +60,7 @@ public class ContractFactoryImplTest {
 
         assertThat(contract).isNotNull();
 
-        Mockito.verify(bankRepositoryMock, Mockito.times(1)).findById(Mockito.eq(bankId));
+        Mockito.verify(bankRepositoryMock, Mockito.times(1)).findById(bankId);
     }
 
     private Quota createQuota() {

@@ -1,13 +1,11 @@
 package com.bso.companycob.application.bus.handler;
 
 import com.bso.companycob.application.FakeLockManager;
-import com.bso.companycob.application.FakeTransactionExecutor;
 import com.bso.companycob.application.bus.request.ContractCreationRequest;
 import com.bso.companycob.application.event.ContractCreatedEvent;
 import com.bso.companycob.application.factory.ContractFactory;
 import com.bso.companycob.application.factory.QuotaFactory;
 import com.bso.companycob.application.lock.LockManager;
-import com.bso.companycob.application.transaction.TransactionExecutor;
 import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.enums.CalcType;
 import com.bso.companycob.domain.events.EventRaiser;
@@ -33,12 +31,11 @@ class ContractCreationRequestHandlerTest {
     private final EventRaiser eventRaiserMock = Mockito.mock(EventRaiser.class);
     private final QuotaFactory quotaFactory = Mockito.mock(QuotaFactory.class);
     private final LockManager lockManager = new FakeLockManager();
-    private final TransactionExecutor transactionExecutor = new FakeTransactionExecutor();
 
     @BeforeEach
     public void setup() {
         handler = new ContractCreationRequestHandler(contractFactoryMock, contractWriterRepositoryMock, eventRaiserMock,
-                quotaFactory, lockManager, transactionExecutor);
+                quotaFactory, lockManager);
     }
 
     @Test

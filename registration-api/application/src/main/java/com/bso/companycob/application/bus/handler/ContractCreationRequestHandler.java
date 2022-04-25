@@ -3,11 +3,10 @@ package com.bso.companycob.application.bus.handler;
 import com.bso.companycob.application.bus.request.ContractCreationRequest;
 import com.bso.companycob.application.bus.response.ContractCreationResponse;
 import com.bso.companycob.application.event.ContractCreatedEvent;
-import com.bso.companycob.application.lock.ContractLockeable;
 import com.bso.companycob.application.factory.ContractFactory;
 import com.bso.companycob.application.factory.QuotaFactory;
+import com.bso.companycob.application.lock.ContractLockeable;
 import com.bso.companycob.application.lock.LockManager;
-import com.bso.companycob.application.transaction.TransactionExecutor;
 import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.entity.contract.QuotaCollection;
@@ -30,14 +29,11 @@ public class ContractCreationRequestHandler implements RequestHandler<ContractCr
     private final EventRaiser eventRaiser;
     private final QuotaFactory quotaFactory;
     private final LockManager lockManager;
-    private final TransactionExecutor transactionExecutor;
 
     @Override
     public ContractCreationResponse handle(ContractCreationRequest command) {
-        return transactionExecutor.execute(() -> {
-            var contractLockeable = new ContractLockeable(command.getNumber());
-            return lockManager.lockAndProcess(contractLockeable, () -> doCreate(command));
-        });
+        var contractLockeable = new ContractLockeable(command.getNumber());
+        return lockManager.lockAndProcess(contractLockeable, () -> doCreate(command));
     }
 
     private ContractCreationResponse doCreate(ContractCreationRequest command) {

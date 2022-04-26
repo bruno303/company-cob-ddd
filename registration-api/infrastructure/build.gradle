@@ -15,6 +15,7 @@ dependencies {
     implementation project(':domain')
     implementation project(':application')
 
+    implementation libs.dracko.mediator
     implementation spring.starter.dracko.mediator
     implementation platform("software.amazon.awssdk:bom:${awsSdkVersion}")
     implementation aws.awssdk.sqs

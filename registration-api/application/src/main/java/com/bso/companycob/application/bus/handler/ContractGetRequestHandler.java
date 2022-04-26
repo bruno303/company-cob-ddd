@@ -52,4 +52,9 @@ public class ContractGetRequestHandler implements RequestHandler<ContractGetRequ
         });
         return quotasResponse;
     }
+
+    @Override
+    public Class<ContractGetRequest> getType() {
+        return ContractGetRequest.class;
+    }
 }

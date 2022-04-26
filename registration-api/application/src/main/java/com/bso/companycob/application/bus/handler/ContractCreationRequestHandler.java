@@ -86,4 +86,9 @@ public class ContractCreationRequestHandler implements RequestHandler<ContractCr
         });
         return quotasResponse;
     }
+
+    @Override
+    public Class<ContractCreationRequest> getType() {
+        return ContractCreationRequest.class;
+    }
 }

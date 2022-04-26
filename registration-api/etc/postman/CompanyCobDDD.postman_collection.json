@@ -154,6 +154,17 @@
 		},
 		{
 			"name": "GetAllContracts",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disableCookies": true
 			},

@@ -1,7 +1,7 @@
 package com.bso.companycob.application.bus.handler;
 
-import com.bso.companycob.application.bus.response.ContractGetAllResponse;
 import com.bso.companycob.application.bus.request.ContractGetAllRequest;
+import com.bso.companycob.application.bus.response.ContractGetAllResponse;
 import com.bso.companycob.domain.entity.contract.Contract;
 import com.bso.companycob.domain.entity.contract.Quota;
 import com.bso.companycob.domain.repositories.ContractReaderRepository;
@@ -57,5 +57,10 @@ public class ContractGetAllRequestHandler implements RequestHandler<ContractGetA
             quotasResponse.add(quotaResponse);
         });
         return quotasResponse;
+    }
+
+    @Override
+    public Class<ContractGetAllRequest> getType() {
+        return ContractGetAllRequest.class;
     }
 }

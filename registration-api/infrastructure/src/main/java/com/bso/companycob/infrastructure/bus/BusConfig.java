@@ -20,7 +20,6 @@ import com.bso.dracko.mediator.springboot.EnableDrackoMediator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,41 +35,21 @@ public class BusConfig {
                                                                          EventRaiser eventRaiser,
                                                                          QuotaFactory quotaFactory,
                                                                          LockManager lockManager) {
-        return new RequestHandler<>() {
-            private final ContractCreationRequestHandler originalHandler = new ContractCreationRequestHandler(contractFactory,
-                    contractRepository, eventRaiser, quotaFactory, lockManager);
+        var originalHandler = new ContractCreationRequestHandler(contractFactory,
+                contractRepository, eventRaiser, quotaFactory, lockManager);
 
-            @Transactional
-            @Override
-            public ContractCreationResponse handle(ContractCreationRequest contractCreationRequest) {
-                return originalHandler.handle(contractCreationRequest);
-            }
-        };
+        return new SpringRequestHandlerProxy<>(originalHandler);
     }
 
     @Bean
     public RequestHandler<ContractGetAllRequest, List<ContractGetAllResponse>> contractGetAllRequestHandler(ContractReaderRepository contractReaderRepository) {
-        return new RequestHandler<>() {
-            private final ContractGetAllRequestHandler originalHandler = new ContractGetAllRequestHandler(contractReaderRepository);
-
-            @Transactional
-            @Override
-            public List<ContractGetAllResponse> handle(ContractGetAllRequest contractGetAllRequest) {
-                return originalHandler.handle(contractGetAllRequest);
-            }
-        };
+        var originalHandler = new ContractGetAllRequestHandler(contractReaderRepository);
+        return new SpringRequestHandlerProxy<>(originalHandler);
     }
 
     @Bean
     public RequestHandler<ContractGetRequest, Optional<ContractGetResponse>> contractGetRequestHandler(ContractReaderRepository contractReaderRepository) {
-        return new RequestHandler<>() {
-            private final ContractGetRequestHandler originalHandler = new ContractGetRequestHandler(contractReaderRepository);
-
-            @Transactional
-            @Override
-            public Optional<ContractGetResponse> handle(ContractGetRequest contractGetRequest) {
-                return originalHandler.handle(contractGetRequest);
-            }
-        };
+        var originalHandler = new ContractGetRequestHandler(contractReaderRepository);
+        return new SpringRequestHandlerProxy<>(originalHandler);
     }
 }

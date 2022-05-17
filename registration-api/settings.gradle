@@ -24,6 +24,7 @@ dependencyResolutionManagement {
             alias('mockito-core').to('org.mockito', 'mockito-core').version("${mockitoCoreVersion}")
             alias('restassured').to('io.rest-assured', 'rest-assured').version("${restAssuredVersion}")
             alias('assertj').to('org.assertj', 'assertj-core').version("${assertjVersion}")
+            alias('flyway').to('org.flywaydb', 'flyway-core').withoutVersion()
 
             bundle('jackson', [ 'jackson-bom', 'jackson-jsr310' ])
         }

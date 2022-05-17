@@ -22,6 +22,7 @@ dependencies {
     implementation spring.starter.aws.parent
     implementation spring.starter.aws.messaging
     implementation libs.bundles.jackson
+    implementation libs.flyway
 }
 
 bootJar {

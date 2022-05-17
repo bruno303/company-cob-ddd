@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  postgres:
+  companycob_postgres:
     image: postgres:14.1-alpine
-    container_name: postgres
+    container_name: companycob_postgres
     restart: "no"
     networks: 
       - companycob
@@ -20,10 +20,10 @@ services:
 # lsof -nP -i :5432 -sTCP:ESTABLISHED
 #
 
-  localstack:
+  companycob_localstack:
     build:
       context: ./localstack
-    container_name: localstack
+    container_name: companycob_localstack
     restart: "no"
     networks:
       - companycob

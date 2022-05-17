@@ -14,8 +14,7 @@ dependencies {
     implementation libs.dracko.mediator
 
     implementation project(':domain')
-    implementation project(':application:application-core')
-    implementation project(':application:application-model')
+    implementation project(':application')
     implementation project(':infrastructure')
     testImplementation project(':test-utils')
 

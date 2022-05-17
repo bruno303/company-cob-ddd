@@ -1,8 +1,8 @@
 package com.bso.companycob.registration.controller;
 
-import com.bso.companycob.application.model.bus.response.ContractCreationResponse;
-import com.bso.companycob.application.model.message.MessageSender;
-import com.bso.companycob.application.model.testemessage.TesteMessageRequest;
+import com.bso.companycob.application.bus.response.ContractCreationResponse;
+import com.bso.companycob.application.message.MessageSender;
+import com.bso.companycob.application.testemessage.TesteMessageRequest;
 import com.bso.companycob.infrastructure.message.MessagingQueueProperties;
 import com.bso.companycob.registration.config.CompanyCobController;
 import lombok.RequiredArgsConstructor;

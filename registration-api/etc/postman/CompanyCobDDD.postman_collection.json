@@ -63,12 +63,10 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8081/auth/realms/companycob/protocol/openid-connect/token",
-					"protocol": "http",
+					"raw": "{{keycloak_host}}/auth/realms/companycob/protocol/openid-connect/token",
 					"host": [
-						"localhost"
+						"{{keycloak_host}}"
 					],
-					"port": "8081",
 					"path": [
 						"auth",
 						"realms",
@@ -100,12 +98,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/bank",
-					"protocol": "http",
+					"raw": "{{companycob_host}}/api/v1/bank",
 					"host": [
-						"localhost"
+						"{{companycob_host}}"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -143,12 +139,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/message",
-					"protocol": "http",
+					"raw": "{{companycob_host}}/api/v1/message",
 					"host": [
-						"localhost"
+						"{{companycob_host}}"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -160,6 +154,17 @@
 		},
 		{
 			"name": "GetAllContracts",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disableCookies": true
 			},
@@ -177,16 +182,47 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/contract",
-					"protocol": "http",
+					"raw": "{{companycob_host}}/api/v1/contract",
 					"host": [
-						"localhost"
+						"{{companycob_host}}"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
 						"contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetContractById",
+			"protocolProfileBehavior": {
+				"disableCookies": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token_keycloak}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{companycob_host}}/api/v1/contract/{{contract_id}}",
+					"host": [
+						"{{companycob_host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"contract",
+						"{{contract_id}}"
 					]
 				}
 			},
@@ -204,12 +240,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/hello",
-					"protocol": "http",
+					"raw": "{{companycob_host}}/hello",
 					"host": [
-						"localhost"
+						"{{companycob_host}}"
 					],
-					"port": "8080",
 					"path": [
 						"hello"
 					]
@@ -224,7 +258,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							""
+							"var id = pm.response.json().id;",
+							"pm.collectionVariables.set(\"contract_id\", id);"
 						],
 						"type": "text/javascript"
 					}
@@ -257,7 +292,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"number\": \"{{$randomUUID}}\",\n    \"date\": \"{{$isoTimestamp}}\",\n    \"bankId\": \"4c8cea55-1341-4898-9b40-1b70542b36ce\",\n    \"quotas\": [\n        {\n            \"number\": {{$randomInt}},\n            \"amount\": {{$randomPrice}},\n            \"date\": \"{{$isoTimestamp}}\",\n            \"status\": \"OPEN\"\n        }\n    ],\n    \"calcType\": \"DEFAULT\"\n}",
+					"raw": "{\n    \"number\": \"{{$randomUUID}}\",\n    \"date\": \"{{$isoTimestamp}}\",\n    \"bankId\": \"{{bank_id}}\",\n    \"quotas\": [\n        {\n            \"number\": {{$randomInt}},\n            \"amount\": {{$randomPrice}},\n            \"date\": \"{{$isoTimestamp}}\",\n            \"status\": \"OPEN\"\n        }\n    ],\n    \"calcType\": \"DEFAULT\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -265,12 +300,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/contract",
-					"protocol": "http",
+					"raw": "{{companycob_host}}/api/v1/contract",
 					"host": [
-						"localhost"
+						"{{companycob_host}}"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -287,7 +320,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							""
+							"var id = pm.response.json().id;",
+							"pm.collectionVariables.set(\"bank_id\", id);"
 						],
 						"type": "text/javascript"
 					}
@@ -328,12 +362,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/bank",
-					"protocol": "http",
+					"raw": "{{companycob_host}}/api/v1/bank",
 					"host": [
-						"localhost"
+						"{{companycob_host}}"
 					],
-					"port": "8080",
 					"path": [
 						"api",
 						"v1",
@@ -368,6 +400,26 @@
 		{
 			"key": "token_keycloak",
 			"value": ""
+		},
+		{
+			"key": "bank_id",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "contract_id",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "companycob_host",
+			"value": "http://localhost:8080",
+			"type": "default"
+		},
+		{
+			"key": "keycloak_host",
+			"value": "http://localhost:8081",
+			"type": "default"
 		}
 	]
 }

@@ -1,4 +1,0 @@
-dependencies {
-    implementation libs.dracko.mediator
-    implementation project(':domain')
-}

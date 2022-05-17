@@ -1,8 +1,8 @@
 package com.bso.companycob.infrastructure.lock;
 
-import com.bso.companycob.application.model.lock.Callable;
-import com.bso.companycob.application.model.lock.LockManager;
-import com.bso.companycob.application.model.lock.Lockeable;
+import com.bso.companycob.application.function.Callable;
+import com.bso.companycob.application.lock.LockManager;
+import com.bso.companycob.application.lock.Lockeable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

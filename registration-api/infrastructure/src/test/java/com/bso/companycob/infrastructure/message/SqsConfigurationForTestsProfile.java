@@ -1,7 +1,7 @@
 package com.bso.companycob.infrastructure.message;
 
-import com.bso.companycob.application.model.message.MessageListener;
-import com.bso.companycob.application.model.message.MessageSender;
+import com.bso.companycob.application.message.MessageListener;
+import com.bso.companycob.application.message.MessageSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;

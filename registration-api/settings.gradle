@@ -4,11 +4,7 @@ include 'application'
 include 'test-utils'
 include 'infrastructure'
 include 'web'
-include 'application:application-model'
-include 'application:application-core'
-findProject(':application:application-core')?.name = 'application-core'
-include 'application:application-model'
-findProject(':application:application-model')?.name = 'application-model'
+include 'application'
 
 enableFeaturePreview('VERSION_CATALOGS')
 

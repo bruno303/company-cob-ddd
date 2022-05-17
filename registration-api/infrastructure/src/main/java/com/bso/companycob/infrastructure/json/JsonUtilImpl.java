@@ -1,6 +1,6 @@
 package com.bso.companycob.infrastructure.json;
 
-import com.bso.companycob.application.model.json.JsonUtil;
+import com.bso.companycob.application.json.JsonUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

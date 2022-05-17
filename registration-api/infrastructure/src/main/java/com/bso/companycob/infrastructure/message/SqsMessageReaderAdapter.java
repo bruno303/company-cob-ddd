@@ -1,7 +1,7 @@
 package com.bso.companycob.infrastructure.message;
 
-import com.bso.companycob.application.model.json.JsonUtil;
-import com.bso.companycob.application.model.message.MessageReader;
+import com.bso.companycob.application.json.JsonUtil;
+import com.bso.companycob.application.message.MessageReader;
 import lombok.RequiredArgsConstructor;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.Message;

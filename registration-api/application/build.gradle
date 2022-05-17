@@ -1,0 +1,8 @@
+dependencies {
+    testRuntimeOnly libs.junit.engine
+    testImplementation libs.mockito.core
+    implementation libs.dracko.mediator
+    testImplementation libs.assertj
+
+    implementation project(':domain')
+}

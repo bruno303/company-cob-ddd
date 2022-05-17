@@ -1,11 +1,13 @@
 package com.bso.companycob.infrastructure.message;
 
-import com.bso.companycob.application.model.async.AsyncRunner;
-import com.bso.companycob.application.model.json.JsonUtil;
-import com.bso.companycob.application.model.message.MessageListener;
+import com.bso.companycob.application.async.AsyncRunner;
+import com.bso.companycob.application.json.JsonUtil;
+import com.bso.companycob.application.message.MessageListener;
+import com.bso.companycob.application.messaging.MessageProcessor;
 import com.bso.companycob.infrastructure.aws.OnUseRawAwsSdkEnabled;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import software.amazon.awssdk.services.sqs.SqsClient;
@@ -27,13 +29,16 @@ public class TesteQueueListenerWithRawAwsSdk extends SqsMessageReaderAdapter imp
     private final AsyncRunner asyncRunner;
     private final ExecutorService listenerExecutor = Executors.newFixedThreadPool(4);
     private final ExecutorService processorExecutor = Executors.newFixedThreadPool(4);
+    private final MessageProcessor messageProcessor;
 
     public TesteQueueListenerWithRawAwsSdk(SqsClient sqsClient, JsonUtil jsonUtil, MessagingQueueProperties messagingQueueProperties,
-                                           SqsMessageDeleter sqsMessageDeleter, AsyncRunner asyncRunner) {
+                                           SqsMessageDeleter sqsMessageDeleter, AsyncRunner asyncRunner,
+                                           @Qualifier(MessageProcessor.TESTE_MESSAGE_PROCESSOR) MessageProcessor messageProcessor) {
         super(sqsClient, jsonUtil);
         this.messagingQueueProperties = messagingQueueProperties;
         this.sqsMessageDeleter = sqsMessageDeleter;
         this.asyncRunner = asyncRunner;
+        this.messageProcessor = messageProcessor;
     }
 
     @PostConstruct
@@ -57,7 +62,7 @@ public class TesteQueueListenerWithRawAwsSdk extends SqsMessageReaderAdapter imp
 
     private void handle(Message message) {
         var body = message.body();
-        LOGGER.info("Message received: {}", body);
+        messageProcessor.process(body);
         sqsMessageDeleter.delete(messagingQueueProperties.getTesteQueue(), message.receiptHandle());
     }
 
